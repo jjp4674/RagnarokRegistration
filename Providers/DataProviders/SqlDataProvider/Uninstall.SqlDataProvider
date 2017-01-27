@@ -1,0 +1,49 @@
+﻿/************************************************************/
+/*****              SqlDataProvider                     *****/
+/*****                                                  *****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for {databaseOwner} and {objectQualifier}  *****/
+/*****                                                  *****/
+/************************************************************/
+
+
+
+/************************************************************/
+/*****              SqlDataProvider                     *****/
+/************************************************************/
+
+/******************** TABLE DELETION SCRIPTS ****************************/
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}RagnarokCampMaster]') and OBJECTPROPERTY(id, N'IsTable') = 1)
+	DROP TABLE {databaseOwner}[{objectQualifier}RagnarokCampMaster]
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}RagnarokAddress]') and OBJECTPROPERTY(id, N'IsTable') = 1)
+	DROP TABLE {databaseOwner}[{objectQualifier}RagnarokAddress]
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}RagnarokContactInformation]') and OBJECTPROPERTY(id, N'IsTable') = 1)
+	DROP TABLE {databaseOwner}[{objectQualifier}RagnarokContactInformation]
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}RagnarokEmergencyContact]') and OBJECTPROPERTY(id, N'IsTable') = 1)
+	DROP TABLE {databaseOwner}[{objectQualifier}RagnarokEmergencyContact]
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}RagnarokHealthIssues]') and OBJECTPROPERTY(id, N'IsTable') = 1)
+	DROP TABLE {databaseOwner}[{objectQualifier}RagnarokHealthIssues]
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}RagnarokParticipant]') and OBJECTPROPERTY(id, N'IsTable') = 1)
+	DROP TABLE {databaseOwner}[{objectQualifier}RagnarokParticipant]
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}RagnarokCamp]') and OBJECTPROPERTY(id, N'IsTable') = 1)
+	DROP TABLE {databaseOwner}[{objectQualifier}RagnarokCamp]
+GO
+
+
+/******************** STORED PROCEDURE DELETION SCRIPTS *****************/
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}GetCamps]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}GetCamps
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}AddRegistration]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}AddRegistration
+GO
