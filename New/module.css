@@ -1,0 +1,160 @@
+div.item
+{
+    position: relative;
+    display: block;
+    margin-bottom: 6px;
+}
+
+div.item input, div.item select
+{
+    position: absolute;
+    left: 188px;
+    width: 180px;
+    margin: 0;
+    height: 21px;
+
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+div.item div
+{
+    float: none;
+    clear: both;
+}
+
+.error
+{
+    padding-top: 3px;
+    color: #FF0000;
+}
+
+.required
+{
+    color: #FF0000;
+    font-style: italic;
+}
+
+.healthIssue
+{
+    width: 368px;
+}
+
+.healthIssue textarea
+{
+    position: relative;
+    display: block;
+    
+    width: 368px;
+    margin: 0;
+    height: 63px;
+
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.removeIssue
+{
+    position: relative;
+    background-color: #A97D5D;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    float: right;
+}
+.removeIssue img
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#signaturePad
+{
+    border: solid #9C9F84 1px;
+    width: 600px;
+    height: 200px;
+    z-index: 99;
+}
+
+#clearSignature
+{
+    height: 32px;
+    width: 73px;
+    background-color: #9C9F84;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 3px;
+}
+
+#clearSignature img
+{
+    margin-top: 1px;
+}
+
+.footer
+{
+    height: 32px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.next input, .previous input, #register input, #btnHealthIssue input
+{
+    background-color: #9C9F84;
+    margin-top: 1px;
+}
+
+.next input
+{
+    padding-left: 25px; 
+    padding-right: 25px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.previous input
+{
+    padding-left: 13px; 
+    padding-right: 13px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+#register input
+{
+    padding-left: 12px; 
+    padding-right: 12px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+#btnHealthIssue input
+{
+    padding-left: 12px; 
+    padding-right: 12px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+#btnHealthIssue
+{
+    margin-bottom: 3px;
+}
+
+.next, #register
+{
+    float: right;
+}
+
+.previous
+{
+    float: left;
+}
+
+#participantInfo, #characterInfo, #emergencyInfo, #waiverInfo, #paymentInfo, #confirmation, #error
+{
+    display: none;
+}

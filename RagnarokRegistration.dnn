@@ -1,6 +1,6 @@
 <dotnetnuke type="Package" version="5.0">
   <packages>
-    <package name="RagnarokRegistration" type="Module" version="00.00.03">
+    <package name="RagnarokRegistration" type="Module" version="00.00.97">
       <friendlyName>RagnarokRegistration</friendlyName>
       <description>DagorhirRagnarok.com RagnarokRegistration module</description>
       <iconFile>~/Images/icon_extensions_32px.png</iconFile>
@@ -23,13 +23,58 @@
             <basePath>DesktopModules\RagnarokRegistration</basePath>
             <script type="Install">
               <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>00.00.01.SqlDataProvider</name>
+              <version>00.00.01</version>
+            </script>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>00.00.02.SqlDataProvider</name>
+              <version>00.00.02</version>
+            </script>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
               <name>00.00.03.SqlDataProvider</name>
               <version>00.00.03</version>
+            </script>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>00.00.04.SqlDataProvider</name>
+              <version>00.00.04</version>
+            </script>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>00.00.05.SqlDataProvider</name>
+              <version>00.00.05</version>
+            </script>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>00.00.10.SqlDataProvider</name>
+              <version>00.00.10</version>
+            </script>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>00.00.13.SqlDataProvider</name>
+              <version>00.00.13</version>
+            </script>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>00.00.16.SqlDataProvider</name>
+              <version>00.00.16</version>
+            </script>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>00.00.17.SqlDataProvider</name>
+              <version>00.00.17</version>
+            </script>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>00.00.24.SqlDataProvider</name>
+              <version>00.00.24</version>
             </script>
             <script type="UnInstall">
               <path>Providers\DataProviders\SqlDataProvider</path>
               <name>Uninstall.SqlDataProvider</name>
-              <version>00.00.03</version>
+              <version>00.00.24</version>
             </script>
           </scripts>
         </component>
@@ -99,10 +144,166 @@
             <attributes>
               <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
               <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-              <upgradeVersionsList>00.00.03</upgradeVersionsList>
+              <upgradeVersionsList>00.00.97</upgradeVersionsList>
             </attributes>
           </eventMessage>
         </component>
+        <component type="Assembly">
+          <assemblies>
+            <assembly>
+              <name>RagnarokRegistration.dll</name>
+              <path>bin</path>
+            </assembly>
+          </assemblies>
+        </component>
+      </components>
+    </package>
+    
+    <package name="RagnarokRegistrationNew" type="Module" version="00.00.97">
+      <friendlyName>RagnarokRegistrationNew</friendlyName>
+      <description>DagorhirRagnarok.com RagnarokRegistration modules</description>
+      <iconFile>~/Images/icon_extensions_32px.png</iconFile>
+      <owner>
+        <name>DagorhirRagnarok.com</name>
+        <organization>DagorhirRagnarok.com</organization>
+        <url>http://DagorhirRagnarok.com</url>
+        <email>jjp4674@gmail.com</email>
+      </owner>
+      <license src="License.txt"></license>
+      <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
+      <azureCompatible>true</azureCompatible>
+      <dependencies>
+        <dependency type="CoreVersion">07.00.02</dependency>
+      </dependencies>
+
+      <components>
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/RagnarokRegistration</basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+
+        <component type="Module">
+          <desktopModule>
+            <moduleName>RagnarokRegistrationNew</moduleName>
+            <foldername>RagnarokRegistrationNew</foldername>
+            <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
+            <supportedFeatures>
+              <supportedFeature>IPortable</supportedFeature>
+              <supportedFeature>ISearchable</supportedFeature>
+              <supportedFeature>IUpgradeable</supportedFeature>
+            </supportedFeatures>
+            <moduleDefinitions>
+              <moduleDefinition>
+                <friendlyName>RagnarokRegistration New</friendlyName>
+                <defaultCacheTime>0</defaultCacheTime>
+                <moduleControls>
+                  <moduleControl>
+                    <controlKey />
+                    <controlSrc>DesktopModules/RagnarokRegistration/New/View.ascx</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle />
+                    <controlType>View</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                  </moduleControl>
+                </moduleControls>
+              </moduleDefinition>
+            </moduleDefinitions>
+          </desktopModule>
+          <eventMessage>
+            <processorType>DotNetNuke.Entities.Modules.EventMessageProcessor, DotNetNuke</processorType>
+            <processorCommand>UpgradeModule</processorCommand>
+            <attributes>
+              <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
+              <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
+              <upgradeVersionsList>00.00.97</upgradeVersionsList>
+            </attributes>
+          </eventMessage>
+        </component>
+        
+        <component type="Assembly">
+          <assemblies>
+            <assembly>
+              <name>RagnarokRegistration.dll</name>
+              <path>bin</path>
+            </assembly>
+          </assemblies>
+        </component>
+      </components>
+    </package>
+
+    <package name="RagnarokRegistrationRagU" type="Module" version="00.00.97">
+      <friendlyName>RagnarokRegistrationRagU</friendlyName>
+      <description>DagorhirRagnarok.com RagnarokRegistrationRagU modules</description>
+      <iconFile>~/Images/icon_extensions_32px.png</iconFile>
+      <owner>
+        <name>DagorhirRagnarok.com</name>
+        <organization>DagorhirRagnarok.com</organization>
+        <url>http://DagorhirRagnarok.com</url>
+        <email>jjp4674@gmail.com</email>
+      </owner>
+      <license src="License.txt"></license>
+      <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
+      <azureCompatible>true</azureCompatible>
+      <dependencies>
+        <dependency type="CoreVersion">07.00.02</dependency>
+      </dependencies>
+
+      <components>
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/RagnarokRegistration</basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+
+        <component type="Module">
+          <desktopModule>
+            <moduleName>RagnarokRegistrationRagU</moduleName>
+            <foldername>RagnarokRegistrationRagU</foldername>
+            <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
+            <supportedFeatures>
+              <supportedFeature>IPortable</supportedFeature>
+              <supportedFeature>ISearchable</supportedFeature>
+              <supportedFeature>IUpgradeable</supportedFeature>
+            </supportedFeatures>
+            <moduleDefinitions>
+              <moduleDefinition>
+                <friendlyName>RagnarokRegistration RagU</friendlyName>
+                <defaultCacheTime>0</defaultCacheTime>
+                <moduleControls>
+                  <moduleControl>
+                    <controlKey />
+                    <controlSrc>DesktopModules/RagnarokRegistration/RagU/View.ascx</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle />
+                    <controlType>View</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                  </moduleControl>
+                </moduleControls>
+              </moduleDefinition>
+            </moduleDefinitions>
+          </desktopModule>
+          <eventMessage>
+            <processorType>DotNetNuke.Entities.Modules.EventMessageProcessor, DotNetNuke</processorType>
+            <processorCommand>UpgradeModule</processorCommand>
+            <attributes>
+              <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
+              <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
+              <upgradeVersionsList>00.00.97</upgradeVersionsList>
+            </attributes>
+          </eventMessage>
+        </component>
+
         <component type="Assembly">
           <assemblies>
             <assembly>

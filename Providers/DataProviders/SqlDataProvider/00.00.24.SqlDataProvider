@@ -1,0 +1,157 @@
+﻿/************************************************************/
+/*****              SqlDataProvider                     *****/
+/*****                                                  *****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for {databaseOwner} and {objectQualifier}  *****/
+/*****                                                  *****/
+/************************************************************/
+
+
+
+/************************************************************/
+/*****              SqlDataProvider                     *****/
+/************************************************************/
+
+/******************** TABLE ALTERATION SCRIPTS *****************/
+
+
+/******************** RagnarokParticipant ******************************************/
+ALTER TABLE {databaseOwner}[{objectQualifier}RagnarokParticipant] ADD par_IsMerchant NVARCHAR(1) NOT NULL CONSTRAINT [DF_{databaseOwner}{objectQualifier}RagnarokParticipant_IsMerchant] DEFAULT ('N')
+
+
+/******************** STORED PROCEDURE CREATION SCRIPTS *****************/
+
+
+/******************** AddRegistration ******************************************/
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}AddRegistration]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}AddRegistration
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}AddRegistration
+	@par_c_id			int, 
+	@par_FirstName		nvarchar(100), 
+	@par_LastName		nvarchar(150), 
+	@par_DOB			date, 
+	@par_CharacterName	nvarchar(255), 
+	@par_ChapterName	nvarchar(255), 
+	@par_UnitName		nvarchar(255), 
+	@par_IsMinor		nvarchar(1), 
+	@par_IsMerchant		nvarchar(1), 
+	@par_RegDate		date			= null, 
+	/* Payment Section */
+	@pm_AuthCode		nvarchar(100), 
+	@pm_TransId			nvarchar(100), 
+	@pm_Amount			decimal(6,2), 
+	/* Address Section */
+	@add_Address1		nvarchar(255), 
+	@add_Address2		nvarchar(255)	= null,
+	@add_City			nvarchar(100),
+	@add_State			nvarchar(2), 
+	@add_Zip			nvarchar(10), 
+	/* Contact Information Section */
+	@ci_HomePhone		nvarchar(16), 
+	@ci_CellPhone		nvarchar(16), 
+	@ci_Email			nvarchar(255), 
+	/* Emergency Contact Section */
+	@ec_Name			nvarchar(255), 
+	@ec_Phone			nvarchar(16),
+	/* Signature Section */
+	@s_Signature		nvarchar(MAX) 
+
+AS
+	DECLARE @par_id INT
+
+	INSERT INTO {databaseOwner}{objectQualifier}RagnarokParticipant (
+		par_c_id, 
+		par_FirstName, 
+		par_LastName, 
+		par_DOB, 
+		par_CharacterName, 
+		par_ChapterName, 
+		par_UnitName, 
+		par_EventYear, 
+		par_DateSigned, 
+		par_Status, 
+		par_IsMinor, 
+		par_RegistrationDate, 
+		par_IsMerchant
+	) VALUES (
+		@par_c_id, 
+		@par_FirstName, 
+		@par_LastName, 
+		@par_DOB, 
+		@par_CharacterName, 
+		@par_ChapterName, 
+		@par_UnitName, 
+		GetDate(), 
+		GetDate(), 
+		'Paid', 
+		@par_IsMinor, 
+		@par_RegDate, 
+		@par_IsMerchant
+	)
+
+	SELECT @par_id = @@IDENTITY
+
+	INSERT INTO {databaseOwner}{objectQualifier}RagnarokPayment (
+		pm_par_id, 
+		pm_AuthCode, 
+		pm_TransId, 
+		pm_Amount
+	) VALUES (
+		@par_id, 
+		@pm_AuthCode, 
+		@pm_TransId, 
+		@pm_Amount 
+	)
+
+	INSERT INTO {databaseOwner}{objectQualifier}RagnarokAddress (
+		add_par_id, 
+		add_Address1, 
+		add_Address2, 
+		add_City, 
+		add_State, 
+		add_Zip
+	) VALUES (
+		@par_id, 
+		@add_Address1, 
+		@add_Address2, 
+		@add_City, 
+		@add_State, 
+		@add_Zip
+	)
+
+	INSERT INTO {databaseOwner}{objectQualifier}RagnarokContactInformation (
+		ci_par_id, 
+		ci_HomePhone, 
+		ci_CellPhone, 
+		ci_Email
+	) VALUES (
+		@par_id, 
+		@ci_HomePhone, 
+		@ci_CellPhone, 
+		@ci_Email
+	)
+
+	INSERT INTO {databaseOwner}{objectQualifier}RagnarokEmergencyContact (
+		ec_par_id, 
+		ec_Name, 
+		ec_Phone
+	) VALUES (
+		@par_id, 
+		@ec_Name, 
+		@ec_Phone
+	)
+
+	INSERT INTO {databaseOwner}{objectQualifier}RagnarokSignature (
+		s_par_id, 
+		s_Signature
+	) VALUES (
+		@par_id, 
+		@s_Signature
+	)
+
+	SELECT @par_id;
+GO

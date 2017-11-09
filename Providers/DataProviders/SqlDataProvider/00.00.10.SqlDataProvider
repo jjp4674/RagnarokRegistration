@@ -1,0 +1,37 @@
+﻿/************************************************************/
+/*****              SqlDataProvider                     *****/
+/*****                                                  *****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for {databaseOwner} and {objectQualifier}  *****/
+/*****                                                  *****/
+/************************************************************/
+
+
+
+/************************************************************/
+/*****              SqlDataProvider                     *****/
+/************************************************************/
+
+/******************** STORED PROCEDURE CREATION SCRIPTS *****************/
+
+
+/******************** GetCamp ******************************************/
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}GetCamp]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}GetCamp
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}GetCamp
+	@c_id		INT
+AS
+	SELECT	TOP 1 c_id AS Id, 
+			c_CampName AS CampName, 
+			c_CampLocation AS CampLocation, 
+			cm_FirstName AS FirstName, 
+			cm_LastName AS LastName, 
+			cm_Email AS Email 
+	FROM {databaseOwner}{objectQualifier}RagnarokCamp
+		INNER JOIN {databaseOwner}{objectQualifier}RagnarokCampMaster ON c_cm_id = cm_id
+	WHERE c_id = @c_id;
+GO

@@ -1,0 +1,37 @@
+﻿/************************************************************/
+/*****              SqlDataProvider                     *****/
+/*****                                                  *****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for {databaseOwner} and {objectQualifier}  *****/
+/*****                                                  *****/
+/************************************************************/
+
+
+
+/************************************************************/
+/*****              SqlDataProvider                     *****/
+/************************************************************/
+
+/******************** STORED PROCEDURE CREATION SCRIPTS *****************/
+
+
+/******************** AddRegistration ******************************************/
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}AddHealthIssue]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}AddHealthIssue
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}AddHealthIssue
+	@hi_par_id			int, 
+	@hi_HealthIssue		nvarchar(MAX) 
+
+AS
+	INSERT INTO {databaseOwner}{objectQualifier}RagnarokHealthIssues (
+		hi_par_id, 
+		hi_HealthIssue
+	) VALUES (
+		@hi_par_id, 
+		@hi_HealthIssue
+	)
+GO

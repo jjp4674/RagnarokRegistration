@@ -144,7 +144,7 @@ label.error
     float: left;
 }
 
-#characterInfo, #emergencyInfo, #waiverInfo, #paymentInfo, #confirmation, #error
+#participantInfo, #characterInfo, #emergencyInfo, #waiverInfo, #paymentInfo, #confirmation, #error
 {
     display: none;
 }

@@ -60,10 +60,5 @@ namespace Ragnarok.Modules.RagnarokRegistration
                 return actions;
             }
         }
-
-        private void PopulateCamps()
-        {
-
-        }
     }
 }

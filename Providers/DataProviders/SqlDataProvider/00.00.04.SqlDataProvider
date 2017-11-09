@@ -61,16 +61,12 @@ BEGIN
 
 	CREATE TABLE {databaseOwner}[{objectQualifier}RagnarokError](
 		[err_id] [int] IDENTITY(1,1) NOT NULL,
-		[err_par_id] [int] NOT NULL,
 		[err_ErrorMessage] [nvarchar](MAX) NOT NULL, 
 		[err_ErrorDate] [datetime] NOT NULL
 	)
 
 	ALTER TABLE {databaseOwner}[{objectQualifier}RagnarokError] ADD CONSTRAINT [PK_{databaseOwner}{objectQualifier}RagnarokError]
 	PRIMARY KEY CLUSTERED ([err_id])
-
-	ALTER TABLE {databaseOwner}[{objectQualifier}RagnarokError]  WITH CHECK ADD FOREIGN KEY([err_par_id])
-	REFERENCES {databaseOwner}[{objectQualifier}RagnarokParticipant] ([par_id])
 END
 
 

@@ -20,6 +20,9 @@ namespace Ragnarok.Modules.RagnarokRegistration.Models
         public DateTime DateSigned { get; set; }
         public string Status { get; set; }
         public string Signature { get; set; }
+        public string IsMinor { get; set; }
+        public string IsMerchant { get; set; }
+        public DateTime? RegistrationDate { get; set; }
 
         public Payment Payment { get; set; }
         public Address Address { get; set; }

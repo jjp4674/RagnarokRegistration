@@ -1,0 +1,54 @@
+div.item
+{
+    position: relative;
+    display: block;
+    margin-bottom: 6px;
+}
+
+div.item input, div.item select
+{
+    position: absolute;
+    left: 188px;
+    width: 180px;
+    margin: 0;
+    height: 21px;
+
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+div.item div
+{
+    float: none;
+    clear: both;
+}
+
+.error
+{
+    padding-top: 3px;
+    color: #FF0000;
+}
+
+.required
+{
+    color: #FF0000;
+    font-style: italic;
+}
+
+#register
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#register input
+{
+    background-color: #9C9F84;
+    margin-top: 1px;
+    padding-left: 12px; 
+    padding-right: 12px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}

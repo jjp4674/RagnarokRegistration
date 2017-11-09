@@ -1,7 +1,33 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="View.ascx.cs" Inherits="Ragnarok.Modules.RagnarokRegistration.View" %>
 
+<div id="registrationInfo">
+    <h1>Ragnarok XXXII Pre-Registration</h1>
+    <p>Welcome to the Ragnarok XXXII Pre-Registration page.</p>
+    <p>To pre-register for Ragnarok XXXII, please provide the requested information in the following sections.</p>
+    <h2>Registration Type</h2>
+    <p>Please select the type of registration you wish to submit.</p>
+    <p><b>NOTE:</b> if you are pre-registering a minor, you will have to complete a waiver in person at Troll when you check in, in addition to the information in the following sections.</p>
+    <div class="item">
+        <label for="registrationCost">Registration Type: <span class="required">*</span></label>
+        <select id="registrationCost" name="registrationCost">
+            <option value="75">Adult Saturday - $75</option>
+            <option value="60">Adult Sunday - $60</option>
+            <option value="50">Child Saturday - $50</option>
+            <option value="40">Child Sunday - $40</option>
+            <option value=""></option>
+            <option value="">--------- Merchants ---------</option>
+            <option value="90">Merchant - 20x20 Booth - $90</option>
+            <option value="100">Merchant - 40x20 Booth - $100</option>
+        </select>
+    </div>
+    <div class="footer">
+        <div id="nextParticipantInfo" class="next"><img src="/DesktopModules/RagnarokRegistration/images/next.png" alt="Next" /></div>
+    </div>
+</div>
 <div id="participantInfo">
+    <h1>Ragnarok XXXII Pre-Registration</h1>
     <h2>Participant Information</h2>
+    <p>Please provide some information about yourself (or your minor) for our records.</p>
     <span class="required">* indicates required fields</span><br />
     <div class="item">
         <label for="firstName">First Name: <span class="required">*</span></label>
@@ -116,25 +142,30 @@
         <input id="email" name="email" type="email" />
     </div>
     <div class="footer">
+        <div id="prevRegistrationInfo" class="previous"><img src="/DesktopModules/RagnarokRegistration/images/previous.png" alt="Previous" /></div>
         <div id="nextCharacterInfo" class="next"><img src="/DesktopModules/RagnarokRegistration/images/next.png" alt="Next" /></div>
     </div>
 </div>
 <div id="characterInfo">
+    <h1>Ragnarok XXXII Pre-Registration</h1>
     <h2>Character Information</h2>
+    <p>Please provide some information about your (or your minor's) in-game character.</p>
     <span class="required">* indicates required fields</span><br />
     <div class="item">
         <label for="characterName">Character Name: <span class="required">*</span></label>
         <input id="characterName" name="characterName" type="text" />
     </div>
     <div class="item">
-        <label for="chapterName">Chapter Name: <span class="required">*</span></label>
+        <label for="chapterName">Chapter Name:</label>
         <input id="chapterName" name="chapterName" type="text" />
     </div>
     <div class="item">
-        <label for="unitName">Unit Name: <span class="required">*</span></label>
+        <label for="unitName" id="lblUnitName">Unit Name:</label>
         <input id="unitName" name="unitName" type="text" />
     </div>
     <h2>Camp Information</h2>
+    <p>If your camp is not listed, please have your camp master contact <a href="mailto:troll@dagorhirragnarok.com">troll@dagorhirragnarok.com</a> to register your camp. If you 
+        wish to register without selecting your camp, you can select "Camp Unknown - Will Select Later". You will be required to select your camp when you check in at Troll.</p>
     <div class="item">
         <label for="camp">Camp: <span class="required">*</span></label>
         <select id="camp" name="camp"></select>
@@ -145,7 +176,9 @@
     </div>
 </div>
 <div id="emergencyInfo">
+    <h1>Ragnarok XXXII Pre-Registration</h1>
     <h2>Emergency Contact Information</h2>
+    <p>Please provide a person who should be contacted in the case of emergency.</p>
     <span class="required">* indicates required fields</span><br />
     <div class="item">
         <label for="emergencyContactName">Emergency Contact Name: <span class="required">*</span></label>
@@ -156,6 +189,7 @@
         <input id="emergencyContactPhone" name="emergencyContactPhone" type="text" />
     </div>
     <h2>Health Issues</h2>
+    <p>Any health issues indicated here will be kept confidential and will only be used if aid is administered.</p>
     <div id="healthIssues">
     </div>
     <div id="btnHealthIssue"><img src="/DesktopModules/RagnarokRegistration/images/healthissue.png" alt="Add Health Issue" /></div>
@@ -165,6 +199,7 @@
     </div>
 </div>
 <div id="waiverInfo">
+    <h1>Ragnarok XXXII Pre-Registration</h1>
     <h2>Waiver</h2>
     <p>WAIVER: In consideration of receiving permission from DAGORHIR BATTLE GAMES ASSOCIATION INC. and DAGORHIR RAGNAROK LLC, (Ragnarok) to participate in any Ragnarok 
     sponsored activity, event, tournament, contest, or meeting, the undersigned assumes full responsibility for any bodily injury and. Or property damage arising out 
@@ -192,11 +227,14 @@
     </div>
     <div class="footer">
         <div id="prevEmergencyInfo" class="previous"><img src="/DesktopModules/RagnarokRegistration/images/previous.png" alt="Previous" /></div>
-        <div id="nextPaymentInfo" class="next"><img src="/DesktopModules/RagnarokRegistration/images/next.png" alt="Next" /></div>
+        <!--<div id="nextPaymentInfo" class="next"><img src="/DesktopModules/RagnarokRegistration/images/next.png" alt="Next" /></div>-->
+        <div id="register" class="next"><img src="/DesktopModules/RagnarokRegistration/images/register.png" alt="Register for Ragnarok" /></div>
     </div>
 </div>
 <div id="paymentInfo">
+    <h1>Ragnarok XXXII Pre-Registration</h1>
     <h2>Payment Information</h2>
+    <p>Please provide your payment information. Payment is handled through a secure connection to a third party merchant portal, and no payment information is stored by us.</p>
     <span class="required">* indicates required fields</span><br />
     <div class="item">
         <label for="creditCardNumber">Credit Card Number: <span class="required">*</span></label>
@@ -222,7 +260,6 @@
     <div class="item">
         <label for="creditCardExpirationYear">Expiration Year: <span class="required">*</span></label>
         <select id="creditCardExpirationYear" name="creditCardExpirationYear">
-            <option value="2016">2016</option>
             <option value="2017">2017</option>
             <option value="2018">2018</option>
             <option value="2019">2019</option>
@@ -248,7 +285,7 @@
     <label id="cardError" class="error"></label>
     <div class="footer">
         <div id="prevWaiverInfo" class="previous"><img src="/DesktopModules/RagnarokRegistration/images/previous.png" alt="Previous" /></div>
-        <div id="register"><img src="/DesktopModules/RagnarokRegistration/images/register.png" alt="Register for Ragnarok" /></div>
+        
     </div>
 </div>
 <div id="confirmation">
@@ -269,10 +306,10 @@
 <script type="text/javascript" src="/DesktopModules/RagnarokRegistration/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="/DesktopModules/RagnarokRegistration/js/date.js"></script>
 <script type="text/javascript" src="/DesktopModules/RagnarokRegistration/js/phoneUS.js"></script>
-<script type="text/javascript" src="/DesktopModules/RagnarokRegistration/js/validation.js"></script>
+<script type="text/javascript" src="/DesktopModules/RagnarokRegistration/js/validation.js?v=0.0.27"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
-<!--script type="text/javascript" src="https://js.authorize.net/v1/Accept.js" charset="utf-8"></script-->
-<script type="text/javascript" src="https://jstest.authorize.net/v1/Accept.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://js.authorize.net/v1/Accept.js" charset="utf-8"></script>
+<!--script type="text/javascript" src="https://jstest.authorize.net/v1/Accept.js" charset="utf-8"></script-->
 
 <script type="text/javascript">
     var issue = 0;
@@ -283,6 +320,8 @@
         function (result) {
             var parsedCampJSONObject = jQuery.parseJSON(result);
             $('#camp').append('<option value="">-- Select a Camp --</option>');
+            $('#camp').append('<option value="0">Camp Unknown - Will Select Later</option>');
+            $('#camp').append('<option value="">-------------------</option>');
             $.each(parsedCampJSONObject, function () {
                 $('#camp').append('<option value="' + this.Id + '">' + this.CampName + ' - ' + this.CampMaster.FirstName + ' ' + this.CampMaster.LastName + '</option>');
             });

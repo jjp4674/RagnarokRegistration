@@ -4,6 +4,7 @@ using DotNetNuke.Web.Api;
 using Ragnarok.Modules.RagnarokRegistration.Controllers;
 using Ragnarok.Modules.RagnarokRegistration.Models;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -63,6 +64,38 @@ namespace Ragnarok.Modules.RagnarokRegistration.Services
                     Phone = DTO.R_EmergencyContactInfo.EC_Phone
                 };
 
+                List<HealthIssue> healthIssues = new List<HealthIssue>();
+                foreach (HealthIssueDTO issue in DTO.R_HealthIssues)
+                {
+                    HealthIssue newIssue = new HealthIssue()
+                    {
+                        Issue = issue.HI_Issue
+                    };
+
+                    healthIssues.Add(newIssue);
+                }
+
+                DateTime? regDate = null;
+                string isMinor = "N";
+                string isMerchant = "N";
+                if (DTO.R_RegText.Contains("Saturday"))
+                {
+                    regDate = new DateTime(2017, 06, 17);
+                }
+                else if (DTO.R_RegText.Contains("Sunday"))
+                {
+                    regDate = new DateTime(2017, 06, 18);
+                }
+
+                if (DTO.R_RegText.Contains("Child"))
+                {
+                    isMinor = "Y";
+                }
+                else if (DTO.R_RegText.Contains("Merchant"))
+                {
+                    isMerchant = "Y";
+                }
+
                 var participant = new Participant()
                 {
                     CampId = DTO.R_CampId,
@@ -76,7 +109,11 @@ namespace Ragnarok.Modules.RagnarokRegistration.Services
                     Address = address, 
                     ContactInformation = contactInfo, 
                     EmergencyContact = emergencyContactInfo, 
-                    Signature = DTO.R_Signature
+                    HealthIssues = healthIssues, 
+                    Signature = DTO.R_Signature, 
+                    RegistrationDate = regDate, 
+                    IsMinor = isMinor, 
+                    IsMerchant = isMerchant
                 };
 
                 var registration = new Registration()
@@ -92,7 +129,7 @@ namespace Ragnarok.Modules.RagnarokRegistration.Services
             catch (Exception e)
             {
                 CampController cc = new CampController();
-                cc.AddError(0, e.Message);
+                cc.AddError(e.ToString());
 
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message, e);
             }

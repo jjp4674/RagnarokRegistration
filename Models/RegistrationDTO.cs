@@ -15,7 +15,9 @@ namespace Ragnarok.Modules.RagnarokRegistration.Models
         public AddressDTO R_Address { get; set; }
         public ContactInformationDTO R_ContactInfo { get; set; }
         public EmergencyContactDTO R_EmergencyContactInfo { get; set; }
+        public HealthIssueDTO[] R_HealthIssues { get; set; }
         public string R_Signature { get; set; }
+        public string R_RegText { get; set; }
     }
 
     public class PaymentDTO
@@ -45,5 +47,10 @@ namespace Ragnarok.Modules.RagnarokRegistration.Models
     {
         public string EC_Name { get; set; }
         public string EC_Phone { get; set; }
+    }
+
+    public class HealthIssueDTO
+    {
+        public string HI_Issue { get; set; }
     }
 }

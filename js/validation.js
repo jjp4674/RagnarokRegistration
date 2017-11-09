@@ -1,5 +1,8 @@
 ﻿$().ready(function () {
     var sigError = false;
+    var isMinor = false;
+    var isMerchant = false;
+    var signatureData = "";
 
     $.validator.addMethod("zipcode", function (value, element) {
         return this.optional(element) || /^\d{5}(?:-\d{4})?$/.test(value);
@@ -11,6 +14,7 @@
 
     var validator = $('#Form').validate({
         rules: {
+            registrationCost: "required", 
             firstName: "required",
             lastName: "required",
             dateOfBirth: {
@@ -37,8 +41,6 @@
                 email: true
             },
             characterName: "required",
-            chapterName: "required",
-            unitName: "required",
             camp: "required",
             emergencyContactName: "required",
             emergencyContactPhone: {
@@ -54,6 +56,7 @@
             }
         },
         messages: {
+            registrationCost: "Registration type is required.", 
             firstName: "First name is required.",
             lastName: "Last name is required.",
             dateOfBirth: {
@@ -78,8 +81,6 @@
                 email: "Email must be a valid email address."
             },
             characterName: "Character name is required.",
-            chapterName: "Chapter name is required.",
-            unitName: "Unit name is required.",
             camp: "Camp is required.",
             emergencyContactName: "Emergency contact name is required.",
             emergencyContactPhone: {
@@ -96,6 +97,25 @@
         }
     });
 
+    $('#nextParticipantInfo').click(function () {
+        var costText = $('#registrationCost option:selected').text();
+        if (costText.includes("Child"))
+        {
+            isMinor = true;
+        }
+        else if (costText.includes("Merchant"))
+        {
+            isMerchant = true;
+        }
+
+        var ctValid = validator.element("#registrationCost");
+        if (ctValid)
+        {
+            $('#registrationInfo').hide();
+            $('#participantInfo').show();
+        }
+    });
+
     $('#nextCharacterInfo').click(function () {
         var fnValid = validator.element("#firstName");
         var lnValid = validator.element("#lastName");
@@ -109,6 +129,15 @@
         var eValid = validator.element("#email");
 
         if (fnValid && lnValid && dobValid && a1Valid && cValid && sValid && zValid && hpValid && cpValid && eValid) {
+            if (isMerchant)
+            {
+                $('#lblUnitName').html('Business Name: <span class="required">*</span>');
+            }
+            else
+            {
+                $('#lblUnitName').html('Unit Name:');
+            }
+
             $('#participantInfo').hide();
             $('#characterInfo').show();
         }
@@ -116,11 +145,9 @@
 
     $('#nextEmergencyInfo').click(function () {
         var cnValid = validator.element("#characterName");
-        var chnValid = validator.element("#chapterName");
-        var unValid = validator.element("#unitName");
         var cValid = validator.element("#camp");
 
-        if (cnValid && chnValid && unValid && cValid) {
+        if (cnValid && cValid) {
             $('#characterInfo').hide();
             $('#emergencyInfo').show();
         }
@@ -132,8 +159,19 @@
 
         if (ecnValid && ecpValid) {
             $('#emergencyInfo').hide();
-            $('#waiverInfo').show();
+
+            if (!isMinor) {
+                $('#waiverInfo').show();
+            }
+            else {
+                $('#paymentInfo').show();
+            }
             $('#signaturePad').resize();
+
+            if (signatureData != "")
+            {
+                signaturePad.fromDataURL(signatureData);
+            }
         }
     });
 
@@ -157,9 +195,16 @@
         }
 
         if (arValid && ao18Valid && aaValid && sValid) {
+            signatureData = signaturePad.toDataURL();
+
             $('#waiverInfo').hide();
             $('#paymentInfo').show();
         }
+    });
+
+    $('#prevRegistrationInfo').click(function () {
+        $('#participantInfo').hide();
+        $('#registrationInfo').show();
     });
 
     $('#prevParticipantInfo').click(function () {
@@ -179,7 +224,16 @@
 
     $('#prevWaiverInfo').click(function () {
         $('#paymentInfo').hide();
-        $('#waiverInfo').show();
+        if (!isMinor) {
+            if (signatureData != "") {
+                signaturePad.fromDataURL(signatureData);
+            }
+
+            $('#waiverInfo').show();
+        }
+        else {
+            $('#emergencyInfo').show();
+        }
         $('#signaturePad').resize();
     });
 
@@ -187,6 +241,8 @@
         var ccnValid = validator.element("#creditCardNumber");
 
         if (ccnValid) {
+            $('#overlay').show();
+
             var secureData = {}, authData = {}, cardData = {};
 
             cardData.cardNumber = $('#creditCardNumber').val();
@@ -194,8 +250,8 @@
             cardData.year = $('#creditCardExpirationYear').val();
             secureData.cardData = cardData;
 
-            authData.clientKey = '96fmL4CBZfQdmxZ9Y92Ks8SbF9N399L4fZfEYsZ8JstwbG4U6k9fd7QG4mFyjgkx';
-            authData.apiLoginID = '3QeAr3WX7z';
+            authData.clientKey = '4sW764Nm2cXadGSbtj37rA5sM46uYXcW6Z6C678x5LNAKH9sJRu9ENwAu38erwgJ';
+            authData.apiLoginID = '2B4f4zGR';
             secureData.authData = authData;
 
             Accept.dispatchData(secureData, 'responseHandler');
@@ -208,20 +264,19 @@ function responseHandler(response) {
         for (var i = 0; i < response.messages.message.length; i++) {
             $('#cardError').text(response.messages.message[i].text);
         }
+
+        $('#overlay').hide();
     } else {
         useOpaqueData(response.opaqueData);
     }
 }
 
 function useOpaqueData(responseData) {
-    console.log(responseData.dataDescriptor);
-    console.log(responseData.dataValue);
     submitRegistration(responseData);
 }
 
 function submitRegistration(dataObj) {
     var campId = $('#camp').val();
-    alert(campId);
     var firstName = $('#firstName').val();
     var lastName = $('#lastName').val();
     var dob = $('#dateOfBirth').val();
@@ -242,10 +297,13 @@ function submitRegistration(dataObj) {
     var emergencyName = $('#emergencyContactName').val();
     var emergencyPhone = $('#emergencyContactPhone').val();
 
+    var cost = $('#registrationCost').val();
+    var costText = $('#registrationCost option:selected').text();
+
     var signature = signaturePad.toDataURL();
 
     var payment = {
-        P_Amount: 12.00, 
+        P_Amount: cost,
         P_DataDescriptor: dataObj.dataDescriptor, 
         P_DataValue: dataObj.dataValue
     };
@@ -269,6 +327,15 @@ function submitRegistration(dataObj) {
         EC_Phone: emergencyPhone
     };
 
+    var healthIssue = new Array();
+
+    $('.healthIssueText').each(function () {
+        var issue = {
+            HI_Issue: $(this).val()
+        };
+        healthIssue.push(issue);
+    });
+
     var registration = {
         R_CampId: campId,
         R_FirstName: firstName,
@@ -281,7 +348,9 @@ function submitRegistration(dataObj) {
         R_Address: address,
         R_ContactInfo: contactInfo,
         R_EmergencyContactInfo: emergencyContactInfo,
-        R_Signature: signature
+        R_HealthIssues: healthIssue,
+        R_Signature: signature,
+        R_RegText: costText
     };
 
     $.ajax({
@@ -292,17 +361,17 @@ function submitRegistration(dataObj) {
         beforeSend: sf.setModuleHeaders
     }).done(function (data) {
 
-        console.log('Success');
-
         $('#paymentInfo').hide();
         $('#confirmation').show();
 
-    }).fail(function (jqXHR, textStatus) {
+        $('#overlay').hide();
 
-        console.log('Error: ' + jqXHR.responseText);
+    }).fail(function (jqXHR, textStatus) {
 
         $('#paymentInfo').hide();
         $('#error').show();
+
+        $('#overlay').hide();
 
     });
 }
