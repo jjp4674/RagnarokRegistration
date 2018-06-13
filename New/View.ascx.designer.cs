@@ -22,6 +22,15 @@ namespace Ragnarok.Modules.RagnarokRegistration.New {
         protected global::System.Web.UI.UpdatePanel upMain;
         
         /// <summary>
+        /// lblDebug control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDebug;
+        
+        /// <summary>
         /// pRegistrationInfo control.
         /// </summary>
         /// <remarks>
@@ -31,22 +40,175 @@ namespace Ragnarok.Modules.RagnarokRegistration.New {
         protected global::System.Web.UI.WebControls.Panel pRegistrationInfo;
         
         /// <summary>
-        /// ddlCost control.
+        /// rbAdultSaturday control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCost;
+        protected global::System.Web.UI.WebControls.RadioButton rbAdultSaturday;
         
         /// <summary>
-        /// reqCost control.
+        /// rbAdultSunday control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqCost;
+        protected global::System.Web.UI.WebControls.RadioButton rbAdultSunday;
+        
+        /// <summary>
+        /// rbAdultMonday control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbAdultMonday;
+        
+        /// <summary>
+        /// rbAdultTuesday control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbAdultTuesday;
+        
+        /// <summary>
+        /// rbAdultWednesday control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbAdultWednesday;
+        
+        /// <summary>
+        /// rbAdultThursday control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbAdultThursday;
+        
+        /// <summary>
+        /// rbAdultFriday control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbAdultFriday;
+        
+        /// <summary>
+        /// rbAdultSaturday2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbAdultSaturday2;
+        
+        /// <summary>
+        /// rbChildSaturday control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbChildSaturday;
+        
+        /// <summary>
+        /// rbChildSunday control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbChildSunday;
+        
+        /// <summary>
+        /// rbChildMonday control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbChildMonday;
+        
+        /// <summary>
+        /// rbChildTuesday control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbChildTuesday;
+        
+        /// <summary>
+        /// rbChildWednesday control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbChildWednesday;
+        
+        /// <summary>
+        /// rbChildThursday control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbChildThursday;
+        
+        /// <summary>
+        /// rbChildFriday control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbChildFriday;
+        
+        /// <summary>
+        /// rbChildSaturday2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbChildSaturday2;
+        
+        /// <summary>
+        /// rbMerchant2020 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbMerchant2020;
+        
+        /// <summary>
+        /// rbMerchant4020 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbMerchant4020;
+        
+        /// <summary>
+        /// cusType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cusType;
         
         /// <summary>
         /// pParticipantInfo control.
@@ -697,15 +859,6 @@ namespace Ragnarok.Modules.RagnarokRegistration.New {
         protected global::System.Web.UI.WebControls.ImageButton btnNextPaymentInfo;
         
         /// <summary>
-        /// btnRegister control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnRegister;
-        
-        /// <summary>
         /// pPaymentFooter control.
         /// </summary>
         /// <remarks>
@@ -722,5 +875,14 @@ namespace Ragnarok.Modules.RagnarokRegistration.New {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton btnPreviousWaiverInfo;
+        
+        /// <summary>
+        /// btnRegister control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnRegister;
     }
 }

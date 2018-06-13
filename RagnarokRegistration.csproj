@@ -39,11 +39,12 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AuthorizeNet, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\AuthorizeNet.1.9.1\lib\AuthorizeNet.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>packages\AuthorizeNet.1.9.0\lib\AuthorizeNet.dll</HintPath>
     </Reference>
     <Reference Include="DotNetNuke, Version=7.0.2.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -91,10 +92,53 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\Attendees\View.ascx.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Attendees\View.ascx.designer.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Camps\View.ascx.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Camps\View.ascx.designer.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CheckIn\View.ascx.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CheckIn\View.ascx.designer.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Components\FeatureController.cs" />
     <Compile Include="Controllers\CampController.cs" />
+    <Compile Include="CoopersPayment\View.ascx.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CoopersPayment\View.ascx.designer.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Data\DataProvider.cs" />
+    <Compile Include="FinancialEstimate\View.ascx.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FinancialEstimate\View.ascx.designer.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FinancialSummary\View.ascx.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FinancialSummary\View.ascx.designer.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\Attendee.cs" />
     <Compile Include="Models\Camp.cs" />
     <Compile Include="Models\CampMaster.cs" />
     <Compile Include="Models\ContactInformation.cs" />
@@ -104,6 +148,7 @@
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\Registration.cs" />
     <Compile Include="Models\RegistrationDTO.cs" />
+    <Compile Include="Models\RegistrationType.cs" />
     <Compile Include="New\View.ascx.cs">
       <DependentUpon>View.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -142,6 +187,13 @@
     <Compile Include="Settings.ascx.designer.cs">
       <DependentUpon>Settings.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Staff\View.ascx.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Staff\View.ascx.designer.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+    </Compile>
     <Compile Include="View.ascx.cs">
       <DependentUpon>View.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -151,7 +203,29 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".build\MSBuild.Community.Tasks.dll" />
+    <Content Include=".build\MSBuild.Community.Tasks.targets.xml" />
+    <None Include="BuildScripts\ModulePackage.targets">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="BuildScripts\MSBuild.Community.Tasks.Targets" />
+    <Content Include="Admin\Attendees\module.css" />
+    <Content Include="Admin\Attendees\View.ascx" />
+    <Content Include="Admin\Camps\module.css" />
+    <Content Include="Admin\Camps\View.ascx" />
+    <Content Include="CheckIn\images\View.png" />
+    <Content Include="CheckIn\js\signature.js" />
+    <Content Include="CheckIn\js\signature_pad.js" />
+    <Content Include="CheckIn\js\signature_pad.min.js" />
+    <Content Include="CheckIn\module.css" />
+    <Content Include="CheckIn\View.ascx" />
+    <Content Include="CoopersPayment\module.css" />
+    <Content Include="CoopersPayment\View.ascx" />
     <Content Include="Edit.ascx" />
+    <Content Include="FinancialEstimate\module.css" />
+    <Content Include="FinancialEstimate\View.ascx" />
+    <Content Include="FinancialSummary\module.css" />
+    <Content Include="FinancialSummary\View.ascx" />
     <Content Include="images\clearsignature.png" />
     <Content Include="images\healthissue.png" />
     <Content Include="images\next.png" />
@@ -173,15 +247,35 @@
     <Content Include="New\js\validation.js" />
     <Content Include="New\module.css" />
     <Content Include="New\View.ascx" />
+    <Content Include="packages\AuthorizeNet.1.9.1\lib\AuthorizeNet.dll" />
+    <Content Include="packages\AuthorizeNet.1.9.1\lib\AuthorizeNet.xml" />
+    <Content Include="packages\MSBuildTasks.1.4.0.128\tools\MSBuild.Community.Tasks.dll" />
+    <Content Include="packages\MSBuildTasks.1.4.0.128\tools\MSBuild.Community.Tasks.Targets.xml" />
+    <Content Include="packages\MSBuildTasks.1.4.0.128\tools\MSBuild.Community.Tasks.xml" />
+    <Content Include="packages\QRCoder.1.2.5\lib\monoandroid\QRCoder.dll" />
+    <Content Include="packages\QRCoder.1.2.5\lib\monotouch\QRCoder.dll" />
+    <Content Include="packages\QRCoder.1.2.5\lib\net35\QRCoder.dll" />
+    <Content Include="packages\QRCoder.1.2.5\lib\net35\UnityEngine.dll" />
+    <Content Include="packages\QRCoder.1.2.5\lib\net40\QRCoder.dll" />
+    <Content Include="packages\QRCoder.1.2.5\lib\net40\UnityEngine.dll" />
+    <Content Include="packages\QRCoder.1.2.5\lib\portable-net45+netcore45+wpa81+wp81+wp8+uap\QRCoder.dll" />
+    <Content Include="packages\QRCoder.1.2.5\lib\uap10.0\QRCoder.dll" />
+    <Content Include="packages\QRCoder.1.2.5\lib\xamarinios\QRCoder.dll" />
     <Content Include="RagU\module.css" />
     <Content Include="RagU\View.ascx" />
     <Content Include="ReleaseNotes.txt" />
     <Content Include="Settings.ascx" />
+    <Content Include="Staff\js\validation.js" />
+    <Content Include="Staff\module.css" />
+    <Content Include="Staff\View.ascx" />
     <Content Include="View.ascx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="BuildScripts\ModulePackage.targets" />
-    <Content Include="BuildScripts\MSBuild.Community.Tasks.Targets" />
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\View.ascx.resx" />
@@ -229,6 +323,23 @@
   <ItemGroup>
     <Content Include="Providers\DataProviders\SqlDataProvider\00.00.24.SqlDataProvider" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages\AuthorizeNet.1.9.1\AuthorizeNet.1.9.1.nupkg" />
+    <Content Include="packages\MSBuildTasks.1.4.0.128\content\MSBuild.Community.Tasks.ReadMe.md" />
+    <Content Include="packages\MSBuildTasks.1.4.0.128\MSBuildTasks.1.4.0.128.nupkg" />
+    <Content Include="packages\MSBuildTasks.1.4.0.128\tools\Build.proj" />
+    <Content Include="packages\MSBuildTasks.1.4.0.128\tools\Install.ps1" />
+    <Content Include="Build.proj">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="packages\MSBuildTasks.1.4.0.128\tools\MSBuild.Community.Tasks.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="packages\MSBuildTasks.1.4.0.128\tools\MSBuild.psm1" />
+    <Content Include="packages\QRCoder.1.2.5\QRCoder.1.2.5.nupkg" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -261,7 +372,7 @@
     <PackageName>RagnarokRegistration</PackageName>
     <MSBuildCommunityTasksPath>$(SolutionDir)\packages\MSBuildTasks.1.4.0.128\tools</MSBuildCommunityTasksPath>
   </PropertyGroup>
-  <!--<Import Project="BuildScripts\ModulePackage.Targets" />-->
+  <Import Project="BuildScripts\ModulePackage.Targets" />
   <Target Name="AfterBuild" DependsOnTargets="PackageModule">
   </Target>
 </Project>

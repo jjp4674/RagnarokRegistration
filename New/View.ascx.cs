@@ -31,6 +31,8 @@ using DotNetNuke.Common.Utilities;
 using System.Net.Mail;
 using QRCoder;
 using System.IO;
+using System.Security.Authentication;
+using System.Net;
 
 namespace Ragnarok.Modules.RagnarokRegistration.New
 {
@@ -53,6 +55,11 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
         private const string PROCEDURE_ADD_HEALTH_ISSUE = "AddHealthIssue";
         private const string PROCEDURE_ADD_ERROR = "AddError";
         private const string PROCEDURE_GET_CAMP = "GetCamp";
+
+        private const string REG_TYPE_VIEW_STATE = "regType";
+
+        //const SslProtocols _Tls12 = (SslProtocols)0x00000C00;
+        //const SecurityProtocolType Tls12 = (SecurityProtocolType)_Tls12;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -115,17 +122,26 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
             Page.Validate("Type");
             if (Page.IsValid)
             {
-                businessName.Visible = false;
-                if (ddlCost.SelectedItem.Text.Contains("Merchant"))
+                string type = GetSelectedType();
+                List<RegistrationType> regTypes = PopulateRegistrationTypes();
+                
+                if (!string.IsNullOrWhiteSpace(type))
                 {
-                    businessName.Visible = true;
+                    RegistrationType selectedRegType = regTypes.Where(x => x.Text == type).FirstOrDefault();
+                    WriteToViewState(REG_TYPE_VIEW_STATE, selectedRegType);
+
+                    businessName.Visible = false;
+                    if (selectedRegType.IsMerchant)
+                    {
+                        businessName.Visible = true;
+                    }
+
+                    pParticipantInfo.Visible = true;
+                    pParticipantFooter.Visible = true;
+
+                    pRegistrationInfo.Visible = false;
+                    pRegistrationFooter.Visible = false;
                 }
-
-                pParticipantInfo.Visible = true;
-                pParticipantFooter.Visible = true;
-
-                pRegistrationInfo.Visible = false;
-                pRegistrationFooter.Visible = false;
             }
         }
 
@@ -134,8 +150,11 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
             Page.Validate("Participant");
             if (Page.IsValid)
             {
+                RegistrationType regType = (RegistrationType)GetFromViewState(REG_TYPE_VIEW_STATE);
+                //lblDebug.Text = "Text: " + regType.Text + " | Day: " + regType.Day + " | Date: " + regType.ArrivalDate + " | Cost: " + regType.Cost + " | Minor: " + regType.IsMinor + " | Merchant: " + regType.IsMerchant;
+
                 unitName.Visible = true;
-                if (ddlCost.SelectedItem.Text.Contains("Merchant"))
+                if (regType.IsMerchant)
                 {
                     unitName.Visible = false;
                 }
@@ -166,7 +185,8 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
             Page.Validate("Emergency");
             if (Page.IsValid)
             {
-                if (ddlCost.SelectedItem.Text.Contains("Child"))
+                RegistrationType regType = (RegistrationType)GetFromViewState(REG_TYPE_VIEW_STATE);
+                if (regType.IsMinor)
                 {
                     pPaymentInfo.Visible = true;
                     pPaymentFooter.Visible = true;
@@ -257,7 +277,8 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
 
         protected void btnPreviousWaiverInfo_Click(object sender, ImageClickEventArgs e)
         {
-            if (ddlCost.SelectedItem.Text.Contains("Child"))
+            RegistrationType regType = (RegistrationType)GetFromViewState(REG_TYPE_VIEW_STATE);
+            if (regType.IsMinor)
             {
                 pEmergencyInfo.Visible = true;
                 pEmergencyFooter.Visible = true;
@@ -277,41 +298,6 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
 
         protected void btnRegister_Click(object sender, ImageClickEventArgs e)
         {
-            bool valid = true;
-            lblCheckboxError.Visible = false;
-            lblSignatureError.Visible = false;
-            string script = "";
-
-            if (!cbxAcceptActivities.Checked || !cbxAcceptOver18.Checked || !cbxAcceptRelease.Checked)
-            {
-                lblCheckboxError.Visible = true;
-                valid = false;
-            }
-
-            if (string.IsNullOrEmpty(signatureCode.Value) || signatureCode.Value == "data:," || signatureCode.Value == "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAloAAADKCAYAAAB9ou6AAAAKEUlEQVR4Xu3WMREAAAgDMerfNCp+CwI65Bh+5wgQIECAAAECBBKBJatGCRAgQIAAAQIETmh5AgIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEDgAUHgAMs2/Ea2AAAAAElFTkSuQmCC")
-            {
-                lblSignatureError.Visible = true;
-                valid = false;
-            }
-
-            if (valid)
-            {
-                if (ProcessPayment())
-                {
-                    pWaiverInfo.Visible = false;
-                    pWaiverFooter.Visible = false;
-
-                    pConfirmation.Visible = true;
-                }
-
-                script = "hideSignature();";
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), Guid.NewGuid().ToString(), script, true);
-            }
-
-            script = "hideOverlay();";
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), Guid.NewGuid().ToString(), script, true);
-
-
             Page.Validate("Payment");
             if (Page.IsValid)
             {
@@ -336,21 +322,28 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
                 }
             }
 
-            //string script = "hideOverlay();";
-            //ScriptManager.RegisterStartupScript(Page, Page.GetType(), Guid.NewGuid().ToString(), script, true);
+            string script = "hideOverlay();";
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), Guid.NewGuid().ToString(), script, true);
         }
 
         private bool ProcessPayment()
         {
+            //ServicePointManager.SecurityProtocol = Tls12;
+
+            RegistrationType regType = (RegistrationType)GetFromViewState(REG_TYPE_VIEW_STATE);
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.PRODUCTION;
 
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()
             {
-                // Dev Account: name = "3QeAr3WX7z",
+                // Sandbox Account - Uncomment to run in sandbox mode
+                //name = "3QeAr3WX7z",
+                //Item = "9f896x36Uy242FQf",
+                // -----------------------------------------------------
+                // Production Account - Uncomment to run in production mode
                 name = "2B4f4zGR",
-                ItemElementName = ItemChoiceType.transactionKey,
-                //Item = "9f896x36Uy242FQf"
-                Item = "678PGs573esM4QJ6"
+                Item = "678PGs573esM4QJ6",
+                // -----------------------------------------------------
+                ItemElementName = ItemChoiceType.transactionKey
             };
 
             var creditCard = new creditCardType
@@ -371,7 +364,7 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
             var transactionRequest = new transactionRequestType
             {
                 transactionType = transactionTypeEnum.authCaptureTransaction.ToString(),
-                amount = Convert.ToDecimal(ddlCost.SelectedValue.ToString()),
+                amount = Convert.ToDecimal(regType.Cost),
                 payment = paymentType,
                 billTo = billToType
             };
@@ -387,7 +380,7 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
 
                 if (response.messages.resultCode == messageTypeEnum.Ok)
                 {
-                    AddRegistration("", "");
+                    AddRegistration("", "", regType);
                 }
                 else
                 {
@@ -400,34 +393,21 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
             catch (Exception ex)
             {
                 cardError.Text = "<br /><br />Error! There was a problem submitting your payment.  Please try again.  If you are still unsuccessful, please contact Troll.";
+
+                string errMessage = "Message: " + ex.Message;
+                if (ex.InnerException != null)
+                {
+                    errMessage += " | Inner Exception: " + ex.InnerException.Message;
+                }
+
+                AddError(errMessage);
                 return false;
             }
         }
 
-        private void AddRegistration(string authCode, string transId)
+        private void AddRegistration(string authCode, string transId, RegistrationType regType)
         {
             int participantId = 0;
-
-            DateTime? regDate = null;
-            string isMinor = "N";
-            string isMerchant = "N";
-            if (ddlCost.SelectedItem.Text.Contains("Saturday"))
-            {
-                regDate = new DateTime(2017, 06, 17);
-            }
-            else if (ddlCost.SelectedItem.Text.Contains("Sunday"))
-            {
-                regDate = new DateTime(2017, 06, 18);
-            }
-
-            if (ddlCost.SelectedItem.Text.Contains("Child"))
-            {
-                isMinor = "Y";
-            }
-            else if (ddlCost.SelectedItem.Text.Contains("Merchant"))
-            {
-                isMerchant = "Y";
-            }
 
             using (SqlConnection conn = new SqlConnection(Config.GetConnectionString()))
             {
@@ -441,7 +421,7 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
                 cmd.Parameters.AddWithValue("@par_DOB", txtDateOfBirth.Text);
                 cmd.Parameters.AddWithValue("@par_CharacterName", txtCharacterName.Text);
                 cmd.Parameters.AddWithValue("@par_ChapterName", txtChapterName.Text);
-                if (isMerchant == "Y")
+                if (regType.IsMerchant)
                 {
                     cmd.Parameters.AddWithValue("@par_UnitName", txtBusinessName.Text);
                 }
@@ -449,18 +429,15 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
                 {
                     cmd.Parameters.AddWithValue("@par_UnitName", txtUnitName.Text);
                 }
-                cmd.Parameters.AddWithValue("@par_IsMinor", isMinor);
-                cmd.Parameters.AddWithValue("@par_IsMerchant", isMerchant);
-                if (regDate != null)
-                {
-                    cmd.Parameters.AddWithValue("@par_RegDate", (DateTime)regDate);
-                }
+                cmd.Parameters.AddWithValue("@par_IsMinor", regType.IsMinor ? "Y" : "N");
+                cmd.Parameters.AddWithValue("@par_IsMerchant", regType.IsMerchant ? "Y" : "N");
+                cmd.Parameters.AddWithValue("@par_RegDate", regType.ArrivalDate);
 
                 // Payment
                 cmd.Parameters.AddWithValue("@pm_AuthCode", authCode);
                 cmd.Parameters.AddWithValue("@pm_TransId", transId);
-                //cmd.Parameters.AddWithValue("@pm_Amount", Convert.ToDecimal(ddlCost.SelectedValue.ToString()));
-                cmd.Parameters.AddWithValue("@pm_Amount", 0.00);
+                cmd.Parameters.AddWithValue("@pm_Amount", Convert.ToDecimal(regType.Cost));
+                //cmd.Parameters.AddWithValue("@pm_Amount", 0.00);
 
                 // Address
                 cmd.Parameters.AddWithValue("@add_Address1", txtAddress1.Text);
@@ -510,15 +487,15 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
                 regCamp.Id = 0;
             }
 
-            SendConfirmationEmail(participantId, regCamp, isMinor, isMerchant, regDate);
+            SendConfirmationEmail(participantId, regCamp, regType);
 
             if (regCamp.Id != 0)
             {
-                SendCampMasterEmail(regCamp, isMinor, isMerchant, regDate);
+                SendCampMasterEmail(regCamp, regType);
             }
         }
 
-        private void SendConfirmationEmail(int participantId, Camp regCamp, string isMinor, string isMerchant, DateTime? regDate)
+        private void SendConfirmationEmail(int participantId, Camp regCamp, RegistrationType regType)
         {
             Dictionary<string, string> hostSettings = DotNetNuke.Entities.Controllers.HostController.Instance.GetSettingsDictionary();
 
@@ -526,7 +503,7 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
             mailMessage.From = new MailAddress("troll@dagorhirragnarok.com", "Ragnarok Troll");
             mailMessage.To.Add(new MailAddress(txtEmail.Text));
             mailMessage.Bcc.Add(new MailAddress("jjp4674@gmail.com"));
-            if (isMerchant == "Y")
+            if (regType.IsMerchant)
             {
                 mailMessage.Subject = "Ragnarok XXXII - Merchant Registration Confirmation";
             }
@@ -543,7 +520,7 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
 
             string body = "<p><b>" + txtCharacterName.Text + "</b>,</p>";
             body += "<p>Thank you for registering to attend <b>Ragnarok XXXII</b>";
-            if (isMerchant == "Y")
+            if (regType.IsMerchant)
             {
                 body += " as a merchant";
             }
@@ -562,10 +539,7 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
                 body += "camp when you arrive at Ragnarok.</p>";
             }
 
-            if (isMerchant != "Y")
-            {
-                body += "<p>Your selected arrival date is <b>" + ((DateTime)regDate).ToString("MM/dd/yyyy") + "</b>.</p>";
-            }
+            body += "<p>Your selected arrival date is <b>" + regType.ArrivalDate.ToString("MM/dd/yyyy") + "</b>.</p>";
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode("http://dagorhirragnarok.com/CheckIn.aspx?pid=" + participantId, QRCodeGenerator.ECCLevel.Q);
@@ -585,13 +559,20 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
             av.LinkedResources.Add(linkedQR);
             mailMessage.AlternateViews.Add(av);
 
-            using (SmtpClient client = new SmtpClient(server))
+            try
             {
-                client.Send(mailMessage);
+                using (SmtpClient client = new SmtpClient(server))
+                {
+                    client.Send(mailMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                AddError(ex.ToString());
             }
         }
 
-        private void SendCampMasterEmail(Camp regCamp, string isMinor, string isMerchant, DateTime? regDate)
+        private void SendCampMasterEmail(Camp regCamp, RegistrationType regType)
         {
             Dictionary<string, string> hostSettings = DotNetNuke.Entities.Controllers.HostController.Instance.GetSettingsDictionary();
 
@@ -611,10 +592,7 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
             string body = "<p><b>" + regCamp.CampMaster.FirstName + "</b>,</p>";
             body += "<p>An attendee has registered to attend <b>Ragnarok XXXII</b> as part of <b>" + regCamp.CampName + "</b>!</p>";
             body += "<p>Attendee Information<br />";
-            if (isMerchant != "Y")
-            {
-                body += "Arrival Date: <b>" + ((DateTime)regDate).ToString("MM/dd/yyyy") + "</b><br />";
-            }
+            body += "Arrival Date: <b>" + regType.ArrivalDate.ToString("MM/dd/yyyy") + "</b><br />";
             body += "Name: <b>" + txtFirstName.Text + " " + txtLastName.Text + "</b><br />";
             body += "Character Name: <b>" + txtCharacterName.Text + "</b><br />";
             body += "Unit Name: <b>" + txtUnitName.Text + "</b><br />";
@@ -627,9 +605,16 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
 
             mailMessage.Body = body;
 
-            using (SmtpClient client = new SmtpClient(server))
+            try
             {
-                client.Send(mailMessage);
+                using (SmtpClient client = new SmtpClient(server))
+                {
+                    client.Send(mailMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                AddError(ex.ToString());
             }
         }
 
@@ -690,6 +675,285 @@ namespace Ragnarok.Modules.RagnarokRegistration.New
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        private string GetSelectedType()
+        {
+            if (rbAdultSaturday.Checked)
+                return rbAdultSaturday.Text;
+
+            if (rbAdultSunday.Checked)
+                return rbAdultSunday.Text;
+
+            if (rbAdultMonday.Checked)
+                return rbAdultMonday.Text;
+
+            if (rbAdultTuesday.Checked)
+                return rbAdultTuesday.Text;
+
+            if (rbAdultWednesday.Checked)
+                return rbAdultWednesday.Text;
+
+            if (rbAdultThursday.Checked)
+                return rbAdultThursday.Text;
+
+            if (rbAdultFriday.Checked)
+                return rbAdultFriday.Text;
+
+            if (rbAdultSaturday2.Checked)
+                return rbAdultSaturday2.Text;
+
+            if (rbChildSaturday.Checked)
+                return rbChildSaturday.Text;
+
+            if (rbChildSunday.Checked)
+                return rbChildSunday.Text;
+
+            if (rbChildMonday.Checked)
+                return rbChildMonday.Text;
+
+            if (rbChildTuesday.Checked)
+                return rbChildTuesday.Text;
+
+            if (rbChildWednesday.Checked)
+                return rbChildWednesday.Text;
+
+            if (rbChildThursday.Checked)
+                return rbChildThursday.Text;
+
+            if (rbChildFriday.Checked)
+                return rbChildFriday.Text;
+
+            if (rbChildSaturday2.Checked)
+                return rbChildSaturday2.Text;
+
+            if (rbMerchant2020.Checked)
+                return rbMerchant2020.Text;
+
+            if (rbMerchant4020.Checked)
+                return rbMerchant4020.Text;
+
+            return "";
+        }
+
+        private List<RegistrationType> PopulateRegistrationTypes()
+        {
+            List<RegistrationType> registrationTypes = new List<RegistrationType>();
+
+            // Adult Registrations
+            RegistrationType rt = new RegistrationType
+            {
+                Text = "Saturday (06/16/2018) - $75", 
+                Day = "Saturday", 
+                ArrivalDate = Convert.ToDateTime("06/16/2018"), 
+                IsMinor = false, 
+                IsMerchant = false, 
+                Cost = 75
+            };
+            registrationTypes.Add(rt);
+
+            rt = new RegistrationType
+            {
+                Text = "Sunday (06/17/2018) - $60",
+                Day = "Sunday",
+                ArrivalDate = Convert.ToDateTime("06/17/2018"),
+                IsMinor = false,
+                IsMerchant = false,
+                Cost = 60
+            };
+            registrationTypes.Add(rt);
+
+            rt = new RegistrationType
+            {
+                Text = "Monday (06/18/2018) - $60",
+                Day = "Monday",
+                ArrivalDate = Convert.ToDateTime("06/18/2018"),
+                IsMinor = false,
+                IsMerchant = false,
+                Cost = 60
+            };
+            registrationTypes.Add(rt);
+
+            rt = new RegistrationType
+            {
+                Text = "Tuesday (06/19/2018) - $60",
+                Day = "Tuesday",
+                ArrivalDate = Convert.ToDateTime("06/19/2018"),
+                IsMinor = false,
+                IsMerchant = false,
+                Cost = 60
+            };
+            registrationTypes.Add(rt);
+
+            rt = new RegistrationType
+            {
+                Text = "Wednesday (06/20/2018) - $60",
+                Day = "Wednesday",
+                ArrivalDate = Convert.ToDateTime("06/20/2018"),
+                IsMinor = false,
+                IsMerchant = false,
+                Cost = 60
+            };
+            registrationTypes.Add(rt);
+
+            rt = new RegistrationType
+            {
+                Text = "Thursday (06/21/2018) - $55",
+                Day = "Thursday",
+                ArrivalDate = Convert.ToDateTime("06/21/2018"),
+                IsMinor = false,
+                IsMerchant = false,
+                Cost = 55
+            };
+            registrationTypes.Add(rt);
+
+            rt = new RegistrationType
+            {
+                Text = "Friday (06/22/2018) - $45",
+                Day = "Friday",
+                ArrivalDate = Convert.ToDateTime("06/22/2018"),
+                IsMinor = false,
+                IsMerchant = false,
+                Cost = 45
+            };
+            registrationTypes.Add(rt);
+
+            rt = new RegistrationType
+            {
+                Text = "Saturday (06/23/2018) - $35",
+                Day = "Saturday",
+                ArrivalDate = Convert.ToDateTime("06/23/2018"),
+                IsMinor = false,
+                IsMerchant = false,
+                Cost = 35
+            };
+            registrationTypes.Add(rt);
+
+
+            // Minor Registrations
+            rt = new RegistrationType
+            {
+                Text = "Saturday (06/16/2018) - $50",
+                Day = "Saturday",
+                ArrivalDate = Convert.ToDateTime("06/16/2018"),
+                IsMinor = true,
+                IsMerchant = false,
+                Cost = 50
+            };
+            registrationTypes.Add(rt);
+
+            rt = new RegistrationType
+            {
+                Text = "Sunday (06/17/2018) - $45",
+                Day = "Sunday",
+                ArrivalDate = Convert.ToDateTime("06/17/2018"),
+                IsMinor = true,
+                IsMerchant = false,
+                Cost = 45
+            };
+            registrationTypes.Add(rt);
+
+            rt = new RegistrationType
+            {
+                Text = "Monday (06/18/2018) - $45",
+                Day = "Monday",
+                ArrivalDate = Convert.ToDateTime("06/18/2018"),
+                IsMinor = true,
+                IsMerchant = false,
+                Cost = 45
+            };
+            registrationTypes.Add(rt);
+
+            rt = new RegistrationType
+            {
+                Text = "Tuesday (06/19/2018) - $45",
+                Day = "Tuesday",
+                ArrivalDate = Convert.ToDateTime("06/19/2018"),
+                IsMinor = true,
+                IsMerchant = false,
+                Cost = 45
+            };
+            registrationTypes.Add(rt);
+
+            rt = new RegistrationType
+            {
+                Text = "Wednesday (06/20/2018) - $45",
+                Day = "Wednesday",
+                ArrivalDate = Convert.ToDateTime("06/20/2018"),
+                IsMinor = true,
+                IsMerchant = false,
+                Cost = 45
+            };
+            registrationTypes.Add(rt);
+
+            rt = new RegistrationType
+            {
+                Text = "Thursday (06/21/2018) - $30",
+                Day = "Thursday",
+                ArrivalDate = Convert.ToDateTime("06/21/2018"),
+                IsMinor = true,
+                IsMerchant = false,
+                Cost = 30
+            };
+            registrationTypes.Add(rt);
+
+            rt = new RegistrationType
+            {
+                Text = "Friday (06/22/2018) - $20",
+                Day = "Friday",
+                ArrivalDate = Convert.ToDateTime("06/22/2018"),
+                IsMinor = true,
+                IsMerchant = false,
+                Cost = 20
+            };
+            registrationTypes.Add(rt);
+
+            rt = new RegistrationType
+            {
+                Text = "Saturday (06/23/2018) - $15",
+                Day = "Saturday",
+                ArrivalDate = Convert.ToDateTime("06/23/2018"),
+                IsMinor = true,
+                IsMerchant = false,
+                Cost = 15
+            };
+            registrationTypes.Add(rt);
+
+
+            // Merchant Registrations
+            rt = new RegistrationType
+            {
+                Text = "20x20 Booth - $90",
+                Day = "Friday",
+                ArrivalDate = Convert.ToDateTime("06/15/2018"),
+                IsMinor = false,
+                IsMerchant = true,
+                Cost = 90
+            };
+            registrationTypes.Add(rt);
+
+            rt = new RegistrationType
+            {
+                Text = "40x20 Booth - $100",
+                Day = "Friday",
+                ArrivalDate = Convert.ToDateTime("06/15/2018"),
+                IsMinor = false,
+                IsMerchant = true,
+                Cost = 100
+            };
+            registrationTypes.Add(rt);
+
+            return registrationTypes;
+        }
+
+        private void WriteToViewState(string viewStateName, object objectToWrite)
+        {
+            ViewState[viewStateName] = objectToWrite;
+        }
+
+        private object GetFromViewState(string viewStateName)
+        {
+            return ViewState[viewStateName];
         }
     }
 }

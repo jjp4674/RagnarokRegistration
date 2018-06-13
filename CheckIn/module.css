@@ -1,0 +1,159 @@
+.leftCol
+{
+    width: 200px;
+}
+
+.row input, .row select
+{
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.error
+{
+    color: #FF0000;
+}
+
+.required
+{
+    color: #FF0000;
+    font-style: italic;
+}
+
+#btnHealthIssue
+{
+    height: 32px;
+    width: 210px;
+    background-color: #9C9F84;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 3px;
+}
+
+#btnHealthIssue img
+{
+    margin-top: 1px;
+}
+
+.healthIssue
+{
+    width: 368px;
+}
+
+.healthIssue textarea
+{
+    position: relative;
+    display: block;
+    
+    width: 368px;
+    margin: 0;
+    height: 63px;
+
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.removeIssue
+{
+    position: relative;
+    background-color: #A97D5D;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    float: right;
+}
+.removeIssue img
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#signaturePad
+{
+    border: solid #9C9F84 1px;
+    width: 100%;
+    height: 200px;
+    z-index: 99;
+}
+
+#clearSignature
+{
+    height: 32px;
+    width: 73px;
+    background-color: #9C9F84;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 3px;
+}
+
+#clearSignature img
+{
+    margin-top: 1px;
+}
+
+.footer
+{
+    height: 32px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.row
+{
+    float: none;
+    clear: both;
+}
+.col1, .col2
+{
+    width: 420px;
+    float: left;
+}
+.checkedInBlock
+{
+    width: 100%;
+    background-color: #5cb85c;
+}
+.minorBlock
+{
+    width: 100%;
+    background-color: #ff8484;
+}
+.merchantBlock
+{
+    width: 100%;
+    background-color: #fff789;
+}
+.notPaidBlock
+{
+    width: 100%;
+    background-color: #ff0000;
+    color: #ffffff;
+}
+.minorBlock p, .merchantBlock p, .checkedInBlock p, .arrivalBlock p, .notPaidBlock p
+{
+    font-size: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+.pad-b-10
+{
+    padding-bottom: 10px;
+}
+.pad-t-10
+{
+    padding-top: 10px;
+}
+
+.rowAlt
+{
+    background-color: #f9ead4;
+}
+.rowHead
+{
+    background-color: #F7DCB4;
+    font-weight: bold;
+}

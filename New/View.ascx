@@ -2,28 +2,50 @@
 
 <asp:UpdatePanel ID="upMain" runat="server">
     <ContentTemplate>
-        <asp:Panel ID="pRegistrationInfo" runat="server" Visible="false">
-            <h1>Ragnarok XXXII Staff Pre-Registration</h1>
-            <p>Welcome to the Ragnarok XXXII Pre-Registration page.</p>
-            <p>To pre-register for Ragnarok XXXII, please provide the requested information in the following sections.</p>
+        <asp:Label ID="lblDebug" runat="server" />
+        <asp:Panel ID="pRegistrationInfo" runat="server">
+            <h1>Ragnarok XXXIII Pre-Registration</h1>
+            <p>Welcome to the Ragnarok XXXIII Pre-Registration page.</p>
+            <p>To pre-register for Ragnarok XXXIII, please provide the requested information in the following sections.</p>
             <h2>Registration Type</h2>
             <p>Please select the type of registration you wish to submit.</p>
+            <p><b>You will not be permitted on site before the day you select for arrival.</b></p>
             <p><b>NOTE:</b> if you are pre-registering a minor, you will have to complete a waiver in person at Troll when you check in, in addition to the information in the following sections.</p>
-            <div class="item">
-                <label for="registrationCost">Registration Type: <span class="required">*</span></label>
-                <asp:DropDownList ID="ddlCost" runat="server">
-                    <asp:ListItem Value="0" Text="On Site Arrival - Paid Cash" Selected="True" />
-                    <asp:ListItem Value="75" Text="Adult Saturday - $0" />
-                    <asp:ListItem Value="60" Text="Adult Sunday - $0" />
-                    <asp:ListItem Value="50" Text="Child Saturday - $0" />
-                    <asp:ListItem Value="40" Text="Child Sunday - $0" />
-                </asp:DropDownList>
-                <div>
-                    <asp:RequiredFieldValidator ID="reqCost" runat="server" ControlToValidate="ddlCost" InitialValue="" Display="Dynamic" ErrorMessage="Registration type is required." CssClass="error" ValidationGroup="Type" />
+            <div>
+                <div class="regArea">
+                    <h2>Adult Registrations</h2>
+                    <asp:RadioButton ID="rbAdultSaturday" runat="server" Text="Saturday (06/16/2018) - $75" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbAdultSunday" runat="server" Text="Sunday (06/17/2018) - $60" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbAdultMonday" runat="server" Text="Monday (06/18/2018) - $60" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbAdultTuesday" runat="server" Text="Tuesday (06/19/2018) - $60" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbAdultWednesday" runat="server" Text="Wednesday (06/20/2018) - $60" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbAdultThursday" runat="server" Text="Thursday (06/21/2018) - $55" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbAdultFriday" runat="server" Text="Friday (06/22/2018) - $45" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbAdultSaturday2" runat="server" Text="Saturday (06/23/2018) - $35" CssClass="radioButton" GroupName="RegType" />
                 </div>
+                <div class="regArea">
+                    <h2>Child Registrations</h2>
+                    <asp:RadioButton ID="rbChildSaturday" runat="server" Text="Saturday (06/16/2018) - $50" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbChildSunday" runat="server" Text="Sunday (06/17/2018) - $45" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbChildMonday" runat="server" Text="Monday (06/18/2018) - $45" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbChildTuesday" runat="server" Text="Tuesday (06/19/2018) - $45" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbChildWednesday" runat="server" Text="Wednesday (06/20/2018) - $45" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbChildThursday" runat="server" Text="Thursday (06/21/2018) - $30" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbChildFriday" runat="server" Text="Friday (06/22/2018) - $20" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbChildSaturday2" runat="server" Text="Saturday (06/23/2018) - $15" CssClass="radioButton" GroupName="RegType" />
+                </div>
+                <div class="regArea">
+                    <h2>Merchant Registrations</h2>
+                    <asp:RadioButton ID="rbMerchant2020" runat="server" Text="20x20 Booth - $90" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbMerchant4020" runat="server" Text="40x20 Booth - $100" CssClass="radioButton" GroupName="RegType" />
+                </div>
+                <div class="clearBoth"></div>
+            </div>
+            <div>
+                <asp:CustomValidator ID="cusType" runat="server" ClientValidationFunction="valType" Display="Dynamic" ErrorMessage="<br />Registration type is required." CssClass="error" ValidationGroup="Type" />
             </div>
         </asp:Panel>
-        <asp:Panel ID="pParticipantInfo" runat="server">
+        <asp:Panel ID="pParticipantInfo" runat="server" Visible="false">
             <h1>Ragnarok XXXII Pre-Registration</h1>
             <h2>Participant Information</h2>
             <p>Please provide some information about yourself (or your minor) for our records.</p>
@@ -371,7 +393,7 @@
             <div class="footer">
                 <div class="previous">
                     <asp:ImageButton ID="btnPreviousRegistrationInfo" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/previous.png" AlternateText="Next" 
-                        OnClick="btnPreviousRegistrationInfo_Click" Visible="false" />
+                        OnClick="btnPreviousRegistrationInfo_Click" />
                 </div>
                 <div class="next">
                     <asp:ImageButton ID="btnNextCharacterInfo" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/next.png" AlternateText="Next" 
@@ -409,13 +431,9 @@
                     <asp:ImageButton ID="btnPreviousEmergencyInfo" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/previous.png" AlternateText="Next" 
                         OnClientClick="writeSignature();" OnClick="btnPreviousEmergencyInfo_Click" />
                 </div>
-                <!--<div class="next">
+                <div class="next">
                     <asp:ImageButton ID="btnNextPaymentInfo" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/next.png" AlternateText="Next" 
                         OnClientClick="writeSignature();" OnClick="btnNextPaymentInfo_Click" />
-                </div>-->
-                <div id="register" class="next">
-                    <asp:ImageButton ID="btnRegister" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/register.png" AlternateText="Register for Ragnarok" 
-                        OnClientClick="writeSignature(); showOverlay();" OnClick="btnRegister_Click" ValidationGroup="Payment" />
                 </div>
             </div>
         </asp:Panel>
@@ -425,6 +443,10 @@
                     <asp:ImageButton ID="btnPreviousWaiverInfo" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/previous.png" AlternateText="Next" 
                         OnClick="btnPreviousWaiverInfo_Click" />
                 </div>
+                <div id="register" class="next">
+                    <asp:ImageButton ID="btnRegister" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/register.png" AlternateText="Register for Ragnarok" 
+                        OnClientClick="showOverlay();" OnClick="btnRegister_Click" ValidationGroup="Payment" />
+                </div>
             </div>
         </asp:Panel>
     </ContentTemplate>
@@ -432,6 +454,7 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.js"></script>
 <script type="text/javascript" src="/DesktopModules/RagnarokRegistration/js/signature.js"></script>
+<script type="text/javascript" src="/DesktopModules/RagnarokRegistration/New/js/validation.js"></script>
 
 <script type="text/javascript">
     var sf = $.ServicesFramework(<%:ModuleContext.ModuleId%>);

@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\dnndev.me\DesktopModules\RagnarokRegistration\install\</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include=".build/MSBuild.Community.Tasks.dll">
+      <publishTime>10/18/2017 09:39:36</publishTime>
+    </File>
+    <File Include=".build/MSBuild.Community.Tasks.targets.xml">
+      <publishTime>10/18/2017 09:39:36</publishTime>
+    </File>
+    <File Include="App_LocalResources/Edit.ascx.resx">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="App_LocalResources/Settings.ascx.resx">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="App_LocalResources/View.ascx.resx">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="bin/AuthorizeNet.dll">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="bin/ClientDependency.Core.dll">
+      <publishTime>10/18/2017 09:37:25</publishTime>
+    </File>
+    <File Include="bin/CountryListBox.dll">
+      <publishTime>10/18/2017 09:37:25</publishTime>
+    </File>
+    <File Include="bin/DotNetNuke.dll">
+      <publishTime>10/18/2017 09:37:27</publishTime>
+    </File>
+    <File Include="bin/DotNetNuke.HttpModules.dll">
+      <publishTime>10/18/2017 09:37:24</publishTime>
+    </File>
+    <File Include="bin/DotNetNuke.Instrumentation.dll">
+      <publishTime>10/18/2017 09:37:25</publishTime>
+    </File>
+    <File Include="bin/dotnetnuke.log4net.dll">
+      <publishTime>10/18/2017 09:37:28</publishTime>
+    </File>
+    <File Include="bin/DotNetNuke.Services.Syndication.dll">
+      <publishTime>10/18/2017 09:37:27</publishTime>
+    </File>
+    <File Include="bin/DotNetNuke.Web.Client.dll">
+      <publishTime>10/18/2017 09:37:26</publishTime>
+    </File>
+    <File Include="bin/DotNetNuke.Web.dll">
+      <publishTime>10/18/2017 09:37:28</publishTime>
+    </File>
+    <File Include="bin/DotNetNuke.WebControls.dll">
+      <publishTime>10/18/2017 09:37:28</publishTime>
+    </File>
+    <File Include="bin/DotNetNuke.WebUtility.dll">
+      <publishTime>10/18/2017 09:37:27</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AnalysisServices.AdomdClient.dll">
+      <publishTime>10/18/2017 09:37:24</publishTime>
+    </File>
+    <File Include="bin/Microsoft.ApplicationBlocks.Data.dll">
+      <publishTime>10/18/2017 09:37:28</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>10/18/2017 09:37:26</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>10/18/2017 09:37:27</publishTime>
+    </File>
+    <File Include="bin/PetaPoco.dll">
+      <publishTime>10/18/2017 09:37:25</publishTime>
+    </File>
+    <File Include="bin/QRCoder.dll">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="bin/RagnarokRegistration.dll">
+      <publishTime>01/15/2018 16:41:01</publishTime>
+    </File>
+    <File Include="bin/RagnarokRegistration.pdb">
+      <publishTime>01/15/2018 16:41:01</publishTime>
+    </File>
+    <File Include="bin/SharpZipLib.dll">
+      <publishTime>10/18/2017 09:37:28</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>10/18/2017 09:37:27</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>10/18/2017 09:37:24</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>10/18/2017 09:37:27</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>10/18/2017 09:37:28</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>10/18/2017 09:37:27</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>10/18/2017 09:37:27</publishTime>
+    </File>
+    <File Include="bin/Telerik.Web.UI.dll">
+      <publishTime>10/18/2017 09:37:27</publishTime>
+    </File>
+    <File Include="bin/UnityEngine.dll">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="bin/WebFormsMvp.dll">
+      <publishTime>10/18/2017 09:37:25</publishTime>
+    </File>
+    <File Include="Build.proj">
+      <publishTime>10/18/2017 09:38:34</publishTime>
+    </File>
+    <File Include="Edit.ascx">
+      <publishTime>10/18/2017 09:38:34</publishTime>
+    </File>
+    <File Include="images/clearsignature.png">
+      <publishTime>10/18/2017 09:38:34</publishTime>
+    </File>
+    <File Include="images/healthissue.png">
+      <publishTime>10/18/2017 09:38:34</publishTime>
+    </File>
+    <File Include="images/next.png">
+      <publishTime>10/18/2017 09:38:34</publishTime>
+    </File>
+    <File Include="images/previous.png">
+      <publishTime>10/18/2017 09:38:34</publishTime>
+    </File>
+    <File Include="images/register.png">
+      <publishTime>10/18/2017 09:38:34</publishTime>
+    </File>
+    <File Include="images/removeissue.png">
+      <publishTime>10/18/2017 09:38:34</publishTime>
+    </File>
+    <File Include="js/creditcard.js">
+      <publishTime>10/18/2017 09:39:36</publishTime>
+    </File>
+    <File Include="js/date.js">
+      <publishTime>10/18/2017 09:39:36</publishTime>
+    </File>
+    <File Include="js/jquery.creditCardValidator.js">
+      <publishTime>10/18/2017 09:39:36</publishTime>
+    </File>
+    <File Include="js/jquery.validate.js">
+      <publishTime>10/18/2017 09:39:36</publishTime>
+    </File>
+    <File Include="js/jquery.validate.min.js">
+      <publishTime>10/18/2017 09:39:36</publishTime>
+    </File>
+    <File Include="js/phoneUS.js">
+      <publishTime>10/18/2017 09:39:36</publishTime>
+    </File>
+    <File Include="js/signature.js">
+      <publishTime>10/18/2017 09:39:36</publishTime>
+    </File>
+    <File Include="js/signature_pad.js">
+      <publishTime>10/18/2017 09:39:36</publishTime>
+    </File>
+    <File Include="js/signature_pad.min.js">
+      <publishTime>10/18/2017 09:39:36</publishTime>
+    </File>
+    <File Include="js/validation.js">
+      <publishTime>10/18/2017 09:39:36</publishTime>
+    </File>
+    <File Include="License.txt">
+      <publishTime>10/18/2017 09:38:34</publishTime>
+    </File>
+    <File Include="module.css">
+      <publishTime>10/18/2017 09:38:34</publishTime>
+    </File>
+    <File Include="New/js/validation.js">
+      <publishTime>11/10/2017 09:21:33</publishTime>
+    </File>
+    <File Include="New/module.css">
+      <publishTime>11/09/2017 16:03:22</publishTime>
+    </File>
+    <File Include="New/View.ascx">
+      <publishTime>11/10/2017 10:24:31</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>10/18/2017 09:38:34</publishTime>
+    </File>
+    <File Include="packages/AuthorizeNet.1.9.1/AuthorizeNet.1.9.1.nupkg">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="packages/AuthorizeNet.1.9.1/lib/AuthorizeNet.dll">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="packages/MSBuildTasks.1.4.0.128/content/MSBuild.Community.Tasks.ReadMe.md">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="packages/MSBuildTasks.1.4.0.128/MSBuildTasks.1.4.0.128.nupkg">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="packages/MSBuildTasks.1.4.0.128/tools/Build.proj">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="packages/MSBuildTasks.1.4.0.128/tools/Install.ps1">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="packages/MSBuildTasks.1.4.0.128/tools/MSBuild.Community.Tasks.dll">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="packages/MSBuildTasks.1.4.0.128/tools/MSBuild.Community.Tasks.Targets.xml">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="packages/MSBuildTasks.1.4.0.128/tools/MSBuild.Community.Tasks.xml">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="packages/MSBuildTasks.1.4.0.128/tools/MSBuild.psm1">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="packages/QRCoder.1.2.5/lib/monoandroid/QRCoder.dll">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="packages/QRCoder.1.2.5/lib/monotouch/QRCoder.dll">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="packages/QRCoder.1.2.5/lib/net35/QRCoder.dll">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="packages/QRCoder.1.2.5/lib/net35/UnityEngine.dll">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="packages/QRCoder.1.2.5/lib/net40/QRCoder.dll">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="packages/QRCoder.1.2.5/lib/net40/UnityEngine.dll">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="packages/QRCoder.1.2.5/lib/portable-net45+netcore45+wpa81+wp81+wp8+uap/QRCoder.dll">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="packages/QRCoder.1.2.5/lib/uap10.0/QRCoder.dll">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="packages/QRCoder.1.2.5/lib/xamarinios/QRCoder.dll">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="packages/QRCoder.1.2.5/QRCoder.1.2.5.nupkg">
+      <publishTime>10/18/2017 09:39:37</publishTime>
+    </File>
+    <File Include="Providers/DataProviders/SqlDataProvider/00.00.01.SqlDataProvider">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="Providers/DataProviders/SqlDataProvider/00.00.02.SqlDataProvider">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="Providers/DataProviders/SqlDataProvider/00.00.03.SqlDataProvider">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="Providers/DataProviders/SqlDataProvider/00.00.04.SqlDataProvider">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="Providers/DataProviders/SqlDataProvider/00.00.05.SqlDataProvider">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="Providers/DataProviders/SqlDataProvider/00.00.10.SqlDataProvider">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="Providers/DataProviders/SqlDataProvider/00.00.13.SqlDataProvider">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="Providers/DataProviders/SqlDataProvider/00.00.16.SqlDataProvider">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="Providers/DataProviders/SqlDataProvider/00.00.17.SqlDataProvider">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="Providers/DataProviders/SqlDataProvider/00.00.24.SqlDataProvider">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="Providers/DataProviders/SqlDataProvider/Uninstall.SqlDataProvider">
+      <publishTime>10/18/2017 09:39:38</publishTime>
+    </File>
+    <File Include="RagnarokRegistration.dnn">
+      <publishTime>01/15/2018 16:40:23</publishTime>
+    </File>
+    <File Include="RagU/module.css">
+      <publishTime>10/18/2017 09:39:36</publishTime>
+    </File>
+    <File Include="RagU/View.ascx">
+      <publishTime>10/18/2017 09:39:36</publishTime>
+    </File>
+    <File Include="ReleaseNotes.txt">
+      <publishTime>10/18/2017 09:38:34</publishTime>
+    </File>
+    <File Include="Settings.ascx">
+      <publishTime>10/18/2017 09:38:34</publishTime>
+    </File>
+    <File Include="View.ascx">
+      <publishTime>10/18/2017 09:38:34</publishTime>
+    </File>
+    <File Include="web.config">
+      <publishTime>01/15/2018 16:41:13</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

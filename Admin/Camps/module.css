@@ -1,0 +1,195 @@
+div.item
+{
+    position: relative;
+    display: block;
+    margin-bottom: 6px;
+}
+
+div.item input, div.item select, div.item span.dnnCheckbox
+{
+    position: absolute;
+    left: 188px;
+    width: 180px;
+    margin: 0;
+    height: 21px;
+
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.fullWidth
+{
+    width: 100%;
+    height: 21px;
+
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+label.error
+{
+    display: block;
+    padding-top: 3px;
+    color: #FF0000;
+}
+
+.required
+{
+    color: #FF0000;
+    font-style: italic;
+}
+
+#btnHealthIssue
+{
+    height: 32px;
+    width: 210px;
+    background-color: #9C9F84;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 3px;
+}
+
+#btnHealthIssue img
+{
+    margin-top: 1px;
+}
+
+.healthIssue
+{
+    width: 368px;
+}
+
+.healthIssue textarea
+{
+    position: relative;
+    display: block;
+    
+    width: 368px;
+    margin: 0;
+    height: 63px;
+
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.removeIssue
+{
+    position: relative;
+    background-color: #A97D5D;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    float: right;
+}
+.removeIssue img
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#signaturePad
+{
+    border: solid #9C9F84 1px;
+    width: 600px;
+    height: 200px;
+    z-index: 99;
+}
+
+#clearSignature
+{
+    height: 32px;
+    width: 73px;
+    background-color: #9C9F84;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 3px;
+}
+
+#clearSignature img
+{
+    margin-top: 1px;
+}
+
+.footer
+{
+    height: 32px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.next, .previous
+{
+    height: 32px;
+    width: 100px;
+    background-color: #9C9F84;
+    text-align: center;
+    cursor: pointer;
+}
+
+#register
+{
+    height: 32px;
+    width: 250px;
+    background-color: #9C9F84;
+    text-align: center;
+    cursor: pointer;
+}
+
+.next img, .previous img, #register img
+{
+    margin-top: 1px;
+}
+
+.next, #register
+{
+    float: right;
+}
+
+.previous
+{
+    float: left;
+}
+
+#participantInfo, #characterInfo, #emergencyInfo, #waiverInfo, #paymentInfo, #confirmation, #error
+{
+    display: none;
+}
+
+
+.row
+{
+    float: none;
+    clear: both;
+}
+.col1, .col2
+{
+    width: 420px;
+    float: left;
+}
+.minorBlock
+{
+    width: 100%;
+    background-color: #ff8484;
+}
+.merchantBlock
+{
+    width: 100%;
+    background-color: #fff789;
+}
+.minorBlock p, .merchantBlock p
+{
+    font-size: 18px;
+}
+
+.pad-b-10
+{
+    padding-bottom: 10px;
+}
+.pad-t-10
+{
+    padding-top: 10px;
+}

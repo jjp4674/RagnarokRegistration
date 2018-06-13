@@ -1,0 +1,9 @@
+C:\inetpub\wwwroot\dnndev.me\bin\RagnarokRegistration.dll
+C:\inetpub\wwwroot\dnndev.me\DesktopModules\RagnarokRegistration\obj\Debug\RagnarokRegistration.dll
+C:\inetpub\wwwroot\dnndev.me\DesktopModules\RagnarokRegistration\obj\Debug\RagnarokRegistration.pdb
+C:\inetpub\wwwroot\dnndev.me\bin\RagnarokRegistration.pdb
+C:\dnndev.me\bin\RagnarokRegistration.dll
+C:\dnndev.me\bin\RagnarokRegistration.pdb
+C:\dnndev.me\DesktopModules\RagnarokRegistration\obj\Debug\RagnarokRegistration.csproj.CoreCompileInputs.cache
+C:\dnndev.me\DesktopModules\RagnarokRegistration\obj\Debug\RagnarokRegistration.dll
+C:\dnndev.me\DesktopModules\RagnarokRegistration\obj\Debug\RagnarokRegistration.pdb
