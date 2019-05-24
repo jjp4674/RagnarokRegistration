@@ -10,7 +10,8 @@
             <asp:DropDownList ID="ddlViewYear" runat="server" OnSelectedIndexChanged="ddlViewYear_SelectedIndexChanged" AutoPostBack="true">
                 <asp:ListItem Value="" Text="All Years" />
                 <asp:ListItem Value="2017" Text="2017" />
-                <asp:ListItem Value="2018" Text="2018" Selected="True" />
+                <asp:ListItem Value="2018" Text="2018" />
+                <asp:ListItem Value="2019" Text="2019" Selected="True" />
             </asp:DropDownList>
         </div>
         <div class="right">
@@ -219,6 +220,7 @@
                     <asp:ListItem Value="Not Paid" Text="Not Paid" />
                     <asp:ListItem Value="Paid" Text="Paid" />
                     <asp:ListItem Value="Declined" Text="Declined" />
+                    <asp:ListItem Value="Errored" Text="Errored" />
                     <asp:ListItem Value="Checked In" Text="Checked In" />
                     <asp:ListItem Value="Duplicate" Text="Duplicate" />
                     <asp:ListItem Value="Test" Text="Test" />

@@ -218,7 +218,15 @@ namespace Ragnarok.Modules.RagnarokRegistration.Admin.Attendees
                             txtEmergencyContactName.Text = dr["EmergencyName"].ToString();
                             txtEmergencyContactPhone.Text = dr["EmergencyPhone"].ToString();
                             GetHealthIssues(id);
-                            imgSignature.ImageUrl = dr["Signature"].ToString();
+                            if (!string.IsNullOrEmpty(dr["Signature"].ToString()))
+                            {
+                                imgSignature.ImageUrl = dr["Signature"].ToString();
+                            }
+                            else
+                            {
+                                imgSignature.ImageUrl = "~/images/Signatures/2019/" + id + ".png";
+                            }
+                            
                         }
                     }
                 }
@@ -375,11 +383,11 @@ namespace Ragnarok.Modules.RagnarokRegistration.Admin.Attendees
                             mailMessage.Bcc.Add(new MailAddress("jjp4674@gmail.com"));
                             if (dr["IsMerchant"].ToString() == "Y")
                             {
-                                mailMessage.Subject = "Ragnarok XXXII - Merchant Registration Confirmation";
+                                mailMessage.Subject = "Ragnarok XXXIV - Merchant Registration Confirmation";
                             }
                             else
                             {
-                                mailMessage.Subject = "Ragnarok XXXII - Registration Confirmation";
+                                mailMessage.Subject = "Ragnarok XXXIV - Registration Confirmation";
                             }
                             mailMessage.IsBodyHtml = true;
 
@@ -389,7 +397,7 @@ namespace Ragnarok.Modules.RagnarokRegistration.Admin.Attendees
                             string username = hostSettings["SMTPUsername"];
 
                             string body = "<p><b>" + dr["CharacterName"].ToString() + "</b>,</p>";
-                            body += "<p>Thank you for registering to attend <b>Ragnarok XXXII</b>";
+                            body += "<p>Thank you for registering to attend <b>Ragnarok XXXIV</b>";
                             if (dr["IsMerchant"].ToString() == "Y")
                             {
                                 body += " as a merchant";
@@ -487,7 +495,7 @@ namespace Ragnarok.Modules.RagnarokRegistration.Admin.Attendees
                             mailMessage.From = new MailAddress("troll@dagorhirragnarok.com", "Ragnarok Troll");
                             mailMessage.To.Add(new MailAddress(dr["Email"].ToString()));
                             mailMessage.Bcc.Add(new MailAddress("jjp4674@gmail.com"));
-                            mailMessage.Subject = "Ragnarok XXXIII - Camp Master Attendee Update";
+                            mailMessage.Subject = "Ragnarok XXXIV - Camp Master Attendee Update";
                             mailMessage.IsBodyHtml = true;
 
                             string server = hostSettings["SMTPServer"];

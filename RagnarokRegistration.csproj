@@ -86,6 +86,7 @@
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\QRCoder.1.2.5\lib\net40\UnityEngine.dll</HintPath>
       <Private>True</Private>
@@ -111,6 +112,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CheckIn\View.ascx.designer.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Comped\View.ascx.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Comped\View.ascx.designer.cs">
       <DependentUpon>View.ascx</DependentUpon>
     </Compile>
     <Compile Include="Components\FeatureController.cs" />
@@ -149,11 +157,18 @@
     <Compile Include="Models\Registration.cs" />
     <Compile Include="Models\RegistrationDTO.cs" />
     <Compile Include="Models\RegistrationType.cs" />
-    <Compile Include="New\View.ascx.cs">
+    <Compile Include="RegistrationPayeezy\View.ascx.cs">
       <DependentUpon>View.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="New\View.ascx.designer.cs">
+    <Compile Include="RegistrationPayeezy\View.ascx.designer.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Registration\View.ascx.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Registration\View.ascx.designer.cs">
       <DependentUpon>View.ascx</DependentUpon>
     </Compile>
     <Compile Include="RagnarokRegistrationModuleBase.cs">
@@ -187,13 +202,6 @@
     <Compile Include="Settings.ascx.designer.cs">
       <DependentUpon>Settings.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Staff\View.ascx.cs">
-      <DependentUpon>View.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Staff\View.ascx.designer.cs">
-      <DependentUpon>View.ascx</DependentUpon>
-    </Compile>
     <Compile Include="View.ascx.cs">
       <DependentUpon>View.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -219,6 +227,9 @@
     <Content Include="CheckIn\js\signature_pad.min.js" />
     <Content Include="CheckIn\module.css" />
     <Content Include="CheckIn\View.ascx" />
+    <Content Include="Comped\js\validation.js" />
+    <Content Include="Comped\module.css" />
+    <Content Include="Comped\View.ascx" />
     <Content Include="CoopersPayment\module.css" />
     <Content Include="CoopersPayment\View.ascx" />
     <Content Include="Edit.ascx" />
@@ -244,9 +255,12 @@
     <Content Include="js\validation.js" />
     <Content Include="License.txt" />
     <Content Include="module.css" />
-    <Content Include="New\js\validation.js" />
-    <Content Include="New\module.css" />
-    <Content Include="New\View.ascx" />
+    <Content Include="RegistrationPayeezy\js\validation.js" />
+    <Content Include="RegistrationPayeezy\module.css" />
+    <Content Include="RegistrationPayeezy\View.ascx" />
+    <Content Include="Registration\js\validation.js" />
+    <Content Include="Registration\module.css" />
+    <Content Include="Registration\View.ascx" />
     <Content Include="packages\AuthorizeNet.1.9.1\lib\AuthorizeNet.dll" />
     <Content Include="packages\AuthorizeNet.1.9.1\lib\AuthorizeNet.xml" />
     <Content Include="packages\MSBuildTasks.1.4.0.128\tools\MSBuild.Community.Tasks.dll" />
@@ -265,9 +279,6 @@
     <Content Include="RagU\View.ascx" />
     <Content Include="ReleaseNotes.txt" />
     <Content Include="Settings.ascx" />
-    <Content Include="Staff\js\validation.js" />
-    <Content Include="Staff\module.css" />
-    <Content Include="Staff\View.ascx" />
     <Content Include="View.ascx" />
     <Content Include="web.config" />
     <None Include="web.Debug.config">

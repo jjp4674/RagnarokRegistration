@@ -9,3 +9,10 @@ C:\dnndev.me\bin\RagnarokRegistration.pdb
 C:\dnndev.me\DesktopModules\RagnarokRegistration\obj\Release\RagnarokRegistration.csproj.CoreCompileInputs.cache
 C:\dnndev.me\DesktopModules\RagnarokRegistration\obj\Release\RagnarokRegistration.dll
 C:\dnndev.me\DesktopModules\RagnarokRegistration\obj\Release\RagnarokRegistration.pdb
+C:\RagnarokWebsite\bin\RagnarokRegistration.dll.config
+C:\RagnarokWebsite\bin\RagnarokRegistration.dll
+C:\RagnarokWebsite\bin\RagnarokRegistration.pdb
+C:\RagnarokWebsite\DesktopModules\RagnarokRegistration\obj\Release\RagnarokRegistration.csproj.CoreCompileInputs.cache
+C:\RagnarokWebsite\DesktopModules\RagnarokRegistration\obj\Release\RagnarokRegistration.csproj.CopyComplete
+C:\RagnarokWebsite\DesktopModules\RagnarokRegistration\obj\Release\RagnarokRegistration.dll
+C:\RagnarokWebsite\DesktopModules\RagnarokRegistration\obj\Release\RagnarokRegistration.pdb

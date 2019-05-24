@@ -58,6 +58,7 @@ namespace Ragnarok.Modules.RagnarokRegistration.Controllers
                         CampMaster campMaster = new CampMaster();
                         campMaster.FirstName = reader["FirstName"].ToString();
                         campMaster.LastName = reader["LastName"].ToString();
+                        campMaster.CharacterName = reader["CharacterName"].ToString();
 
                         camp.CampMaster = campMaster;
 

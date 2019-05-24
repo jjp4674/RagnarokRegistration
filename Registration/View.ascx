@@ -1,20 +1,43 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="View.ascx.cs" Inherits="Ragnarok.Modules.RagnarokRegistration.Staff.View" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="View.ascx.cs" Inherits="Ragnarok.Modules.RagnarokRegistration.New.View" %>
 
 <asp:UpdatePanel ID="upMain" runat="server">
     <ContentTemplate>
         <asp:Label ID="lblDebug" runat="server" />
         <asp:Panel ID="pRegistrationInfo" runat="server">
-            <h1>Ragnarok XXXIII Pre-Registration</h1>
-            <p>Welcome to the Ragnarok XXXIII Pre-Registration page.</p>
-            <p>To pre-register for Ragnarok XXXIII, please provide the requested information in the following sections.</p>
+            <h1>Ragnarok XXXIV Pre-Registration</h1>
+            <p>Welcome to the Ragnarok XXXIV Pre-Registration page.</p>
+            <p>To pre-register for Ragnarok XXXIV, please provide the requested information in the following sections.</p>
             <h2>Registration Type</h2>
             <p>Please select the type of registration you wish to submit.</p>
             <p><b>You will not be permitted on site before the day you select for arrival.</b></p>
             <p><b>NOTE:</b> if you are pre-registering a minor, you will have to complete a waiver in person at Troll when you check in, in addition to the information in the following sections.</p>
             <div>
                 <div class="regArea">
-                    <h2>Comped Registrations</h2>
-                    <asp:RadioButton ID="rbAdultSaturday" runat="server" Text="Saturday (06/16/2018) - FREE" CssClass="radioButton" GroupName="RegType" />
+                    <h2>Adult Registrations</h2>
+                    <asp:RadioButton ID="rbAdultSaturday" runat="server" Text="Saturday (06/15/2019) - $85" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbAdultSunday" runat="server" Text="Sunday (06/16/2019) - $60" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbAdultMonday" runat="server" Text="Monday (06/17/2019) - $60" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbAdultTuesday" runat="server" Text="Tuesday (06/18/2019) - $60" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbAdultWednesday" runat="server" Text="Wednesday (06/19/2019) - $60" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbAdultThursday" runat="server" Text="Thursday (06/20/2019) - $55" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbAdultFriday" runat="server" Text="Friday (06/21/2019) - $45" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbAdultSaturday2" runat="server" Text="Saturday (06/22/2019) - $35" CssClass="radioButton" GroupName="RegType" />
+                </div>
+                <div class="regArea">
+                    <h2>Child Registrations</h2>
+                    <asp:RadioButton ID="rbChildSaturday" runat="server" Text="Saturday (06/15/2019) - $60" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbChildSunday" runat="server" Text="Sunday (06/16/2019) - $45" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbChildMonday" runat="server" Text="Monday (06/17/2019) - $45" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbChildTuesday" runat="server" Text="Tuesday (06/18/2019) - $45" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbChildWednesday" runat="server" Text="Wednesday (06/19/2019) - $45" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbChildThursday" runat="server" Text="Thursday (06/20/2019) - $30" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbChildFriday" runat="server" Text="Friday (06/21/2019) - $20" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbChildSaturday2" runat="server" Text="Saturday (06/22/2019) - $15" CssClass="radioButton" GroupName="RegType" />
+                </div>
+                <div class="regArea">
+                    <h2>Merchant Registrations</h2>
+                    <asp:RadioButton ID="rbMerchant2020" runat="server" Text="20x20 Booth - $120" CssClass="radioButton" GroupName="RegType" /><br />
+                    <asp:RadioButton ID="rbMerchant4020" runat="server" Text="40x20 Booth - $150" CssClass="radioButton" GroupName="RegType" />
                 </div>
                 <div class="clearBoth"></div>
             </div>
@@ -23,7 +46,7 @@
             </div>
         </asp:Panel>
         <asp:Panel ID="pParticipantInfo" runat="server" Visible="false">
-            <h1>Ragnarok XXXII Pre-Registration</h1>
+            <h1>Ragnarok XXXIV Pre-Registration</h1>
             <h2>Participant Information</h2>
             <p>Please provide some information about yourself (or your minor) for our records.</p>
             <span class="required">* indicates required fields</span><br />
@@ -172,8 +195,22 @@
                 </div>
             </div>
         </asp:Panel>
+        <asp:Panel ID="pVolunteerInfo" runat="server" Visible="false">
+            <h1>Ragnarok XXXIV Pre-Registration</h1>
+            <h2>Volunteer Information</h2>
+            <p>If you are interested in volunteering at Ragnarok, and would like to be contacted with more information and to sign up for a shift, please select the section(s) you 
+            are interested in volunteering for below.</p>
+            <asp:CheckBox ID="cbxVolunteerTroll" runat="server" Text="Troll" /><br />
+            <asp:CheckBox ID="cbxVolunteerSafety" runat="server" Text="Safety" /><br />
+            <asp:CheckBox ID="cbxVolunteerMedic" runat="server" Text="Medics" /><br />
+            <asp:CheckBox ID="cbxVolunteerDay" runat="server" Text="Day Events" /><br />
+            <asp:CheckBox ID="cbxVolunteerNight" runat="server" Text="Night Events" /><br />
+            <asp:CheckBox ID="cbxVolunteerWeapon" runat="server" Text="Weapons Check" /><br />
+            <asp:CheckBox ID="cbxVolunteerRagU" runat="server" Text="Ragnarok University" />
+            <p></p>
+        </asp:Panel>
         <asp:Panel ID="pCharacterInfo" runat="server" Visible="false">
-            <h1>Ragnarok XXXII Pre-Registration</h1>
+            <h1>Ragnarok XXXIV Pre-Registration</h1>
             <h2>Character Information</h2>
             <p>Please provide some information about your (or your minor's) in-game character.</p>
             <span class="required">* indicates required fields</span><br />
@@ -204,7 +241,7 @@
             </div>
         </asp:Panel>
         <asp:Panel ID="pEmergencyInfo" runat="server" Visible="false">
-            <h1>Ragnarok XXXII Pre-Registration</h1>
+            <h1>Ragnarok XXXIV Pre-Registration</h1>
             <h2>Emergency Contact Information</h2>
             <p>Please provide a person who should be contacted in the case of emergency.</p>
             <span class="required">* indicates required fields</span><br />
@@ -234,7 +271,7 @@
             </div>
         </asp:Panel>
         <asp:Panel ID="pWaiverInfo" runat="server" Visible="false">
-            <h1>Ragnarok XXXII Pre-Registration</h1>
+            <h1>Ragnarok XXXIV Pre-Registration</h1>
             <h2>Waiver</h2>
             <p>WAIVER: In consideration of receiving permission from DAGORHIR BATTLE GAMES ASSOCIATION INC. and DAGORHIR RAGNAROK LLC, (Ragnarok) to participate in any Ragnarok 
             sponsored activity, event, tournament, contest, or meeting, the undersigned assumes full responsibility for any bodily injury and. Or property damage arising out 
@@ -256,11 +293,70 @@
                 <asp:Label ID="lblSignatureError" runat="server" Text="Your signature is required." CssClass="error" Visible="false" />
             </div>
         </asp:Panel>
+        <asp:Panel ID="pPaymentInfo" runat="server" Visible="false">
+            <h1>Ragnarok XXXIV Pre-Registration</h1>
+            <h2>Payment Information</h2>
+            <p>Please provide your payment information. Payment is handled through a secure connection to a third party merchant portal, and no payment information is stored by us.</p>
+            <span class="required">* indicates required fields</span><br />
+            <div class="item">
+                <label for="creditCardNumber">Credit Card Number: <span class="required">*</span></label>
+                <asp:TextBox ID="txtCreditCardNumber" runat="server" />
+                <div>
+                    <asp:RequiredFieldValidator ID="reqCCNumber" runat="server" ControlToValidate="txtCreditCardNumber" Display="Dynamic" ErrorMessage="Credit card number is required." CssClass="error" ValidationGroup="Payment" />
+                </div>
+            </div>
+            <div class="item">
+                <label for="creditCardExpirationMonth">Expiration Month: <span class="required">*</span></label>
+                <asp:DropDownList ID="ddlExpirationMonth" runat="server">
+                    <asp:ListItem Value="01" Text="January" />
+                    <asp:ListItem Value="02" Text="Februray" />
+                    <asp:ListItem Value="03" Text="March" />
+                    <asp:ListItem Value="04" Text="April" />
+                    <asp:ListItem Value="05" Text="May" />
+                    <asp:ListItem Value="06" Text="June" />
+                    <asp:ListItem Value="07" Text="July" />
+                    <asp:ListItem Value="08" Text="August" />
+                    <asp:ListItem Value="09" Text="September" />
+                    <asp:ListItem Value="10" Text="October" />
+                    <asp:ListItem Value="11" Text="November" />
+                    <asp:ListItem Value="12" Text="December" />
+                </asp:DropDownList>
+            </div>
+            <div class="item">
+                <label for="creditCardExpirationYear">Expiration Year: <span class="required">*</span></label>
+                <asp:DropDownList ID="ddlExpirationYear" runat="server">
+                    <asp:ListItem Value="18" Text="2018" />
+                    <asp:ListItem Value="19" Text="2019" />
+                    <asp:ListItem Value="20" Text="2020" />
+                    <asp:ListItem Value="21" Text="2021" />
+                    <asp:ListItem Value="22" Text="2022" />
+                    <asp:ListItem Value="23" Text="2023" />
+                    <asp:ListItem Value="24" Text="2024" />
+                    <asp:ListItem Value="25" Text="2025" />
+                    <asp:ListItem Value="26" Text="2026" />
+                    <asp:ListItem Value="27" Text="2027" />
+                    <asp:ListItem Value="28" Text="2028" />
+                    <asp:ListItem Value="29" Text="2029" />
+                    <asp:ListItem Value="30" Text="2030" />
+                    <asp:ListItem Value="31" Text="2031" />
+                    <asp:ListItem Value="32" Text="2032" />
+                    <asp:ListItem Value="33" Text="2033" />
+                    <asp:ListItem Value="34" Text="2034" />
+                    <asp:ListItem Value="35" Text="2035" />
+                    <asp:ListItem Value="36" Text="2036" />
+                </asp:DropDownList>
+            </div>
+            <asp:Label ID="cardError" runat="server" CssClass="error" />
+        </asp:Panel>
         <asp:Panel ID="pConfirmation" runat="server" Visible="false">
-            <h1>Thank you for registering for Ragnarok</h1>
-            <p>Your registration has been successfully submitted.  You will receive an email with your registration confirmation and a QR code which you can bring 
-            with you to check in at Troll for expedited event check in.</p>
+            <h1>Thank you for registering for Ragnarok XXXIV</h1>
+            <p>Your registration has been successfully submitted.  Your confirmation is shown below.</p>
+            <p>You can print this confirmation to show at check in.  You should also receive a confirmation email with this confirmation included.  Some email providers have trouble receiving our 
+            email as we use a shared hosting server, and those email providers flag all mail from those servers as spam.  If you do not print this confirmation or receive an email, you will still be 
+            able to check in at Troll using your name.</p>
             <p>We look forward to seeing you at Ragnarok this year!</p>
+            <hr />
+            <asp:Literal ID="litConfirmation" runat="server" />
             <asp:Label ID="lblTest" runat="server" />
         </asp:Panel>
         <asp:Panel ID="pError" runat="server" Visible="false">
@@ -273,12 +369,16 @@
     <Triggers>
         <asp:AsyncPostBackTrigger ControlID="btnNextParticipantInfo" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnPreviousRegistrationInfo" EventName="Click" />
-        <asp:AsyncPostBackTrigger ControlID="btnNextCharacterInfo" EventName="Click" />
+        <asp:AsyncPostBackTrigger ControlID="btnNextVolunteerInfo" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnPreviousParticipationInfo" EventName="Click" />
+        <asp:AsyncPostBackTrigger ControlID="btnNextCharacterInfo" EventName="Click" />
+        <asp:AsyncPostBackTrigger ControlID="btnPreviousVolunteerInfo" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnNextEmergencyInfo" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnPreviousCharacterInfo" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnNextWaiverInfo" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnPreviousEmergencyInfo" EventName="Click" />
+        <asp:AsyncPostBackTrigger ControlID="btnNextPaymentInfo" EventName="Click" />
+        <asp:AsyncPostBackTrigger ControlID="btnPreviousWaiverInfo" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnRegister" EventName="Click" />
     </Triggers>
 </asp:UpdatePanel>
@@ -315,6 +415,18 @@
                         OnClick="btnPreviousRegistrationInfo_Click" />
                 </div>
                 <div class="next">
+                    <asp:ImageButton ID="btnNextVolunteerInfo" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/next.png" AlternateText="Next" 
+                        OnClick="btnNextVolunteerInfo_Click" ValidationGroup="Participant" />
+                </div>
+            </div>
+        </asp:Panel>
+        <asp:Panel ID="pVolunteerFooter" runat="server" Visible="false">
+            <div class="footer">
+                <div class="previous">
+                    <asp:ImageButton ID="btnPreviousParticipationInfo" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/previous.png" AlternateText="Next" 
+                        OnClick="btnPreviousParticipationInfo_Click" />
+                </div>
+                <div class="next">
                     <asp:ImageButton ID="btnNextCharacterInfo" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/next.png" AlternateText="Next" 
                         OnClick="btnNextCharacterInfo_Click" ValidationGroup="Participant" />
                 </div>
@@ -323,8 +435,8 @@
         <asp:Panel ID="pCharacterFooter" runat="server" Visible="false">
             <div class="footer">
                 <div class="previous">
-                    <asp:ImageButton ID="btnPreviousParticipationInfo" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/previous.png" AlternateText="Next" 
-                        OnClick="btnPreviousParticipationInfo_Click" />
+                    <asp:ImageButton ID="btnPreviousVolunteerInfo" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/previous.png" AlternateText="Next" 
+                        OnClick="btnPreviousVolunteerInfo_Click" />
                 </div>
                 <div class="next">
                     <asp:ImageButton ID="btnNextEmergencyInfo" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/next.png" AlternateText="Next" 
@@ -350,6 +462,18 @@
                     <asp:ImageButton ID="btnPreviousEmergencyInfo" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/previous.png" AlternateText="Next" 
                         OnClientClick="writeSignature();" OnClick="btnPreviousEmergencyInfo_Click" />
                 </div>
+                <div class="next">
+                    <asp:ImageButton ID="btnNextPaymentInfo" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/next.png" AlternateText="Next" 
+                        OnClientClick="writeSignature();" OnClick="btnNextPaymentInfo_Click" />
+                </div>
+            </div>
+        </asp:Panel>
+        <asp:Panel ID="pPaymentFooter" runat="server" Visible="false">
+            <div class="footer">
+                <div class="previous">
+                    <asp:ImageButton ID="btnPreviousWaiverInfo" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/previous.png" AlternateText="Next" 
+                        OnClick="btnPreviousWaiverInfo_Click" />
+                </div>
                 <div id="register" class="next">
                     <asp:ImageButton ID="btnRegister" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/images/register.png" AlternateText="Register for Ragnarok" 
                         OnClientClick="showOverlay();" OnClick="btnRegister_Click" ValidationGroup="Payment" />
@@ -361,7 +485,7 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.js"></script>
 <script type="text/javascript" src="/DesktopModules/RagnarokRegistration/js/signature.js"></script>
-<script type="text/javascript" src="/DesktopModules/RagnarokRegistration/Staff/js/validation.js"></script>
+<script type="text/javascript" src="/DesktopModules/RagnarokRegistration/New/js/validation.js"></script>
 
 <script type="text/javascript">
     var sf = $.ServicesFramework(<%:ModuleContext.ModuleId%>);

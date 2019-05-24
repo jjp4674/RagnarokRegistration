@@ -34,7 +34,7 @@ using System.IO;
 using System.Security.Authentication;
 using System.Net;
 
-namespace Ragnarok.Modules.RagnarokRegistration.Staff
+namespace Ragnarok.Modules.RagnarokRegistration.Comped
 {
     /// -----------------------------------------------------------------------------
     /// <summary>
@@ -51,12 +51,17 @@ namespace Ragnarok.Modules.RagnarokRegistration.Staff
     /// -----------------------------------------------------------------------------
     public partial class View : RagnarokRegistrationModuleBase, IActionable
     {
-        private const string PROCEDURE_ADD_REGISTRATION = "AddRegistration";
+        private const string PROCEDURE_CREATE_REGISTRATION = "CreateRegistration";
+        private const string PROCEDURE_COMPLETE_REGISTRATION = "CompleteRegistration";
+        private const string PROCEDURE_UPDATE_REGISTRATION = "UpdateRegistration";
         private const string PROCEDURE_ADD_HEALTH_ISSUE = "AddHealthIssue";
         private const string PROCEDURE_ADD_ERROR = "AddError";
         private const string PROCEDURE_GET_CAMP = "GetCamp";
 
         private const string REG_TYPE_VIEW_STATE = "regType";
+
+        private string pageBody;
+        private byte[] qrCodeBytes;
 
         //const SslProtocols _Tls12 = (SslProtocols)0x00000C00;
         //const SecurityProtocolType Tls12 = (SecurityProtocolType)_Tls12;
@@ -122,14 +127,36 @@ namespace Ragnarok.Modules.RagnarokRegistration.Staff
             Page.Validate("Type");
             if (Page.IsValid)
             {
-                businessName.Visible = false;
+                string type = GetSelectedType();
+                List<RegistrationType> regTypes = PopulateRegistrationTypes();
+                
+                if (!string.IsNullOrWhiteSpace(type))
+                {
+                    RegistrationType selectedRegType = regTypes.Where(x => x.Text == type).FirstOrDefault();
+                    WriteToViewState(REG_TYPE_VIEW_STATE, selectedRegType);
 
-                pParticipantInfo.Visible = true;
-                pParticipantFooter.Visible = true;
+                    businessName.Visible = false;
+                    if (selectedRegType.IsMerchant)
+                    {
+                        businessName.Visible = true;
+                    }
 
-                pRegistrationInfo.Visible = false;
-                pRegistrationFooter.Visible = false;
+                    pParticipantInfo.Visible = true;
+                    pParticipantFooter.Visible = true;
+
+                    pRegistrationInfo.Visible = false;
+                    pRegistrationFooter.Visible = false;
+                }
             }
+        }
+
+        protected void btnNextVolunteerInfo_Click(object sender, ImageClickEventArgs e)
+        {
+            pVolunteerInfo.Visible = true;
+            pVolunteerFooter.Visible = true;
+
+            pParticipantInfo.Visible = false;
+            pParticipantFooter.Visible = false;
         }
 
         protected void btnNextCharacterInfo_Click(object sender, ImageClickEventArgs e)
@@ -137,13 +164,20 @@ namespace Ragnarok.Modules.RagnarokRegistration.Staff
             Page.Validate("Participant");
             if (Page.IsValid)
             {
+                RegistrationType regType = (RegistrationType)GetFromViewState(REG_TYPE_VIEW_STATE);
+                //lblDebug.Text = "Text: " + regType.Text + " | Day: " + regType.Day + " | Date: " + regType.ArrivalDate + " | Cost: " + regType.Cost + " | Minor: " + regType.IsMinor + " | Merchant: " + regType.IsMerchant;
+
                 unitName.Visible = true;
+                if (regType.IsMerchant)
+                {
+                    unitName.Visible = false;
+                }
 
                 pCharacterInfo.Visible = true;
                 pCharacterFooter.Visible = true;
 
-                pParticipantInfo.Visible = false;
-                pParticipantFooter.Visible = false;
+                pVolunteerInfo.Visible = false;
+                pVolunteerFooter.Visible = false;
             }
         }
 
@@ -190,6 +224,15 @@ namespace Ragnarok.Modules.RagnarokRegistration.Staff
             pParticipantInfo.Visible = true;
             pParticipantFooter.Visible = true;
 
+            pVolunteerInfo.Visible = false;
+            pVolunteerFooter.Visible = false;
+        }
+
+        protected void btnPreviousVolunteerInfo_Click(object sender, ImageClickEventArgs e)
+        {
+            pVolunteerInfo.Visible = true;
+            pVolunteerFooter.Visible = true;
+
             pCharacterInfo.Visible = false;
             pCharacterFooter.Visible = false;
         }
@@ -217,17 +260,34 @@ namespace Ragnarok.Modules.RagnarokRegistration.Staff
 
         protected void btnRegister_Click(object sender, ImageClickEventArgs e)
         {
-            Page.Validate("Payment");
-            if (Page.IsValid)
+            bool valid = true;
+            lblCheckboxError.Visible = false;
+            lblSignatureError.Visible = false;
+
+            if (!cbxAcceptActivities.Checked || !cbxAcceptOver18.Checked || !cbxAcceptRelease.Checked)
+            {
+                lblCheckboxError.Visible = true;
+                valid = false;
+            }
+
+            if (string.IsNullOrEmpty(signatureCode.Value) || signatureCode.Value == "data:," || signatureCode.Value == "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAloAAADKCAYAAAB9ou6AAAAKEUlEQVR4Xu3WMREAAAgDMerfNCp+CwI65Bh+5wgQIECAAAECBBKBJatGCRAgQIAAAQIETmh5AgIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEDgAUHgAMs2/Ea2AAAAAElFTkSuQmCC")
+            {
+                lblSignatureError.Visible = true;
+                valid = false;
+            }
+
+            if (valid)
             {
                 try
                 {
-                    AddRegistration();
+                    if (ProcessPayment())
+                    {
+                        pWaiverInfo.Visible = false;
+                        pWaiverFooter.Visible = false;
 
-                    pWaiverInfo.Visible = false;
-                    pWaiverFooter.Visible = false;
-
-                    pConfirmation.Visible = true;
+                        litConfirmation.Text = pageBody;
+                        pConfirmation.Visible = true;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -240,21 +300,34 @@ namespace Ragnarok.Modules.RagnarokRegistration.Staff
                 }
             }
 
-            string script = "hideSignature();";
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), Guid.NewGuid().ToString(), script, true);
-
-            script = "hideOverlay();";
+            string script = "hideOverlay();";
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), Guid.NewGuid().ToString(), script, true);
         }
 
-        private void AddRegistration()
+        private bool ProcessPayment()
+        {
+            RegistrationType regType = (RegistrationType)GetFromViewState(REG_TYPE_VIEW_STATE);
+
+            // Create registration record
+            int participantId = CreateRegistration(regType);
+
+            SaveSignature(participantId);
+
+            CompleteRegistration(participantId, "", "", regType);
+
+            UpdateRegistration(participantId, "Paid");
+
+            return true;
+        }
+
+        private int CreateRegistration(RegistrationType regType)
         {
             int participantId = 0;
 
             using (SqlConnection conn = new SqlConnection(Config.GetConnectionString()))
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = PROCEDURE_ADD_REGISTRATION;
+                cmd.CommandText = PROCEDURE_CREATE_REGISTRATION;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 cmd.Parameters.AddWithValue("@par_c_id", ddlCamp.SelectedValue);
@@ -263,16 +336,55 @@ namespace Ragnarok.Modules.RagnarokRegistration.Staff
                 cmd.Parameters.AddWithValue("@par_DOB", txtDateOfBirth.Text);
                 cmd.Parameters.AddWithValue("@par_CharacterName", txtCharacterName.Text);
                 cmd.Parameters.AddWithValue("@par_ChapterName", txtChapterName.Text);
-                cmd.Parameters.AddWithValue("@par_UnitName", txtUnitName.Text);
-                cmd.Parameters.AddWithValue("@par_IsMinor", "N");
-                cmd.Parameters.AddWithValue("@par_IsMerchant", "N");
-                cmd.Parameters.AddWithValue("@par_RegDate", Convert.ToDateTime("06/16/2018"));
+                if (regType.IsMerchant)
+                {
+                    cmd.Parameters.AddWithValue("@par_UnitName", txtBusinessName.Text);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@par_UnitName", txtUnitName.Text);
+                }
+                cmd.Parameters.AddWithValue("@par_IsMinor", regType.IsMinor ? "Y" : "N");
+                cmd.Parameters.AddWithValue("@par_IsMerchant", regType.IsMerchant ? "Y" : "N");
+                cmd.Parameters.AddWithValue("@par_RegDate", regType.ArrivalDate);
+                cmd.Parameters.AddWithValue("@par_VolunteerTroll", cbxVolunteerTroll.Checked ? "Y" : "N");
+                cmd.Parameters.AddWithValue("@par_VolunteerSafety", cbxVolunteerSafety.Checked ? "Y" : "N");
+                cmd.Parameters.AddWithValue("@par_VolunteerMedic", cbxVolunteerMedic.Checked ? "Y" : "N");
+                cmd.Parameters.AddWithValue("@par_VolunteerDay", cbxVolunteerDay.Checked ? "Y" : "N");
+                cmd.Parameters.AddWithValue("@par_VolunteerNight", cbxVolunteerNight.Checked ? "Y" : "N");
+                cmd.Parameters.AddWithValue("@par_VolunteerWeapon", cbxVolunteerWeapon.Checked ? "Y" : "N");
+                cmd.Parameters.AddWithValue("@par_VolunteerRagU", cbxVolunteerRagU.Checked ? "Y" : "N");
+
+                conn.Open();
+
+                participantId = (int)cmd.ExecuteScalar();
+            }
+
+            return participantId;
+        }
+
+        private void SaveSignature(int participantId)
+        {
+            var encodedImage = signatureCode.Value.Split(',')[1];
+            var decodedImage = Convert.FromBase64String(encodedImage);
+
+            File.WriteAllBytes(Server.MapPath("~/images/Signatures/2019/" + participantId + ".png"), decodedImage);
+        }
+
+        private void CompleteRegistration(int participantId, string authCode, string transId, RegistrationType regType)
+        {
+            using (SqlConnection conn = new SqlConnection(Config.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = PROCEDURE_COMPLETE_REGISTRATION;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@par_id", participantId);
 
                 // Payment
-                cmd.Parameters.AddWithValue("@pm_AuthCode", "");
-                cmd.Parameters.AddWithValue("@pm_TransId", "");
-                //cmd.Parameters.AddWithValue("@pm_Amount", Convert.ToDecimal(regType.Cost));
-                cmd.Parameters.AddWithValue("@pm_Amount", 0.00);
+                cmd.Parameters.AddWithValue("@pm_AuthCode", authCode);
+                cmd.Parameters.AddWithValue("@pm_TransId", transId);
+                cmd.Parameters.AddWithValue("@pm_Amount", Convert.ToDecimal(regType.Cost));
 
                 // Address
                 cmd.Parameters.AddWithValue("@add_Address1", txtAddress1.Text);
@@ -290,12 +402,9 @@ namespace Ragnarok.Modules.RagnarokRegistration.Staff
                 cmd.Parameters.AddWithValue("@ec_Name", txtEmergencyContactName.Text);
                 cmd.Parameters.AddWithValue("@ec_Phone", txtEmergencyContactPhone.Text);
 
-                // Signature
-                cmd.Parameters.AddWithValue("@s_Signature", signatureCode.Value);
-
                 conn.Open();
 
-                participantId = (int)cmd.ExecuteScalar();
+                cmd.ExecuteNonQuery();
             }
 
             using (SqlConnection conn = new SqlConnection(Config.GetConnectionString()))
@@ -322,15 +431,33 @@ namespace Ragnarok.Modules.RagnarokRegistration.Staff
                 regCamp.Id = 0;
             }
 
-            SendConfirmationEmail(participantId, regCamp);
+            SendConfirmationEmail(participantId, regCamp, regType);
+            CreateBody(participantId, regCamp, regType);
 
             if (regCamp.Id != 0)
             {
-                SendCampMasterEmail(regCamp);
+                SendCampMasterEmail(regCamp, regType);
             }
         }
 
-        private void SendConfirmationEmail(int participantId, Camp regCamp)
+        private void UpdateRegistration(int participantId, string status)
+        {
+            using (SqlConnection conn = new SqlConnection(Config.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = PROCEDURE_UPDATE_REGISTRATION;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@par_id", participantId);
+                cmd.Parameters.AddWithValue("@par_status", status);
+
+                conn.Open();
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        private void SendConfirmationEmail(int participantId, Camp regCamp, RegistrationType regType)
         {
             Dictionary<string, string> hostSettings = DotNetNuke.Entities.Controllers.HostController.Instance.GetSettingsDictionary();
 
@@ -338,7 +465,14 @@ namespace Ragnarok.Modules.RagnarokRegistration.Staff
             mailMessage.From = new MailAddress("troll@dagorhirragnarok.com", "Ragnarok Troll");
             mailMessage.To.Add(new MailAddress(txtEmail.Text));
             mailMessage.Bcc.Add(new MailAddress("jjp4674@gmail.com"));
-            mailMessage.Subject = "Ragnarok XXXII - Registration Confirmation";
+            if (regType.IsMerchant)
+            {
+                mailMessage.Subject = "Ragnarok XXXIV - Merchant Registration Confirmation";
+            }
+            else
+            {
+                mailMessage.Subject = "Ragnarok XXXIV - Registration Confirmation";
+            }
             mailMessage.IsBodyHtml = true;
 
             string server = hostSettings["SMTPServer"];
@@ -347,7 +481,11 @@ namespace Ragnarok.Modules.RagnarokRegistration.Staff
             string username = hostSettings["SMTPUsername"];
 
             string body = "<p><b>" + txtCharacterName.Text + "</b>,</p>";
-            body += "<p>Thank you for registering to attend <b>Ragnarok XXXII</b>";
+            body += "<p>Thank you for registering to attend <b>Ragnarok XXXIV</b>";
+            if (regType.IsMerchant)
+            {
+                body += " as a merchant";
+            }
             body += "!</p>";
 
             if (regCamp.Id != 0)
@@ -363,40 +501,82 @@ namespace Ragnarok.Modules.RagnarokRegistration.Staff
                 body += "camp when you arrive at Ragnarok.</p>";
             }
 
-            body += "<p>Your selected arrival date is <b>06/16/2018</b>.</p>";
+            body += "<p>Your selected arrival date is <b>" + regType.ArrivalDate.ToString("MM/dd/yyyy") + "</b>.</p>";
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode("http://dagorhirragnarok.com/CheckIn.aspx?pid=" + participantId, QRCodeGenerator.ECCLevel.Q);
             BitmapByteQRCode qrCode = new BitmapByteQRCode(qrCodeData);
-            byte[] qrCodeImage = qrCode.GetGraphic(20);
+            qrCodeBytes = qrCode.GetGraphic(20);
 
-            MemoryStream qr = new MemoryStream(qrCodeImage);
-            LinkedResource linkedQR = new LinkedResource(qr, "image/jpeg");
-            linkedQR.ContentId = "qrCode";
-
-            body += "<p>For expedited check-in at Troll when you arrive at Ragnarok, please present this QR Code to the Troll staff:</p>";
-            body += "<center><p><img style=\"height: 300px; width: 300px;\" src=cid:qrCode /></p></center>";
-            body += "<p>We look forward to seeing you at Ragnarok!</p>";
-            body += "<p>----------------------------------------------<br />Troll</p>";
-
-            AlternateView av = AlternateView.CreateAlternateViewFromString(body, null, System.Net.Mime.MediaTypeNames.Text.Html);
-            av.LinkedResources.Add(linkedQR);
-            mailMessage.AlternateViews.Add(av);
-
-            try
+            LinkedResource linkedQR;
+            using (var ms = new MemoryStream(qrCodeBytes))
             {
-                using (SmtpClient client = new SmtpClient(server))
+                linkedQR = new LinkedResource(ms, "image/jpeg");
+
+                linkedQR.ContentId = "qrCode";
+
+                body += "<p>For expedited check-in at Troll when you arrive at Ragnarok, please present this QR Code to the Troll staff:</p>";
+                body += "<center><p><img style=\"height: 300px; width: 300px;\" src=cid:qrCode /></p></center>";
+                body += "<p>We look forward to seeing you at Ragnarok!</p>";
+                body += "<p>----------------------------------------------<br />Troll</p>";
+
+                AlternateView av = AlternateView.CreateAlternateViewFromString(body, null, System.Net.Mime.MediaTypeNames.Text.Html);
+                av.LinkedResources.Add(linkedQR);
+                mailMessage.AlternateViews.Add(av);
+
+                try
                 {
-                    client.Send(mailMessage);
+                    using (SmtpClient client = new SmtpClient(server))
+                    {
+                        client.Send(mailMessage);
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                AddError(ex.ToString());
+                catch (Exception ex)
+                {
+                    AddError(ex.ToString());
+                }
             }
         }
 
-        private void SendCampMasterEmail(Camp regCamp)
+        private void CreateBody(int participantId, Camp regCamp, RegistrationType regType)
+        {
+            pageBody = "<p><b>" + txtCharacterName.Text + "</b>,</p>";
+            pageBody += "<p>Thank you for registering to attend <b>Ragnarok XXXIV</b>";
+            if (regType.IsMerchant)
+            {
+                pageBody += " as a merchant";
+            }
+            pageBody += "!</p>";
+
+            if (regCamp.Id != 0)
+            {
+                pageBody += "<p>You are marked down as an attendee staying in <b>" + regCamp.CampName + "</b>. If your camp changes, please contact ";
+                pageBody += "<a href=\"mailto:troll@dagorhirragnarok.com\">troll@dagorhirragnarok.com</a> to change your camp, or you can change it ";
+                pageBody += "when you arrive at Ragnarok.</p>";
+            }
+            else
+            {
+                pageBody += "<p>You are marked down as not having a camp selected yet. If you choose a camp, please contact ";
+                pageBody += "<a href=\"mailto:troll@dagorhirragnarok.com\">troll@dagorhirragnarok.com</a> to select your camp, or you can select your ";
+                pageBody += "camp when you arrive at Ragnarok.</p>";
+            }
+
+            pageBody += "<p>Your selected arrival date is <b>" + regType.ArrivalDate.ToString("MM/dd/yyyy") + "</b>.</p>";
+
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode("http://dagorhirragnarok.com/CheckIn.aspx?pid=" + participantId, QRCodeGenerator.ECCLevel.Q);
+            BitmapByteQRCode qrCode = new BitmapByteQRCode(qrCodeData);
+            qrCodeBytes = qrCode.GetGraphic(20);
+
+            string imgSource = "data:image/png;base64," + Convert.ToBase64String(qrCodeBytes, Base64FormattingOptions.None);
+
+            pageBody += "<p>For expedited check-in at Troll when you arrive at Ragnarok, please present this QR Code to the Troll staff:</p>";
+            pageBody += "<center><p><img style=\"height: 300px; width: 300px;\" src=\"" + imgSource + "\" /></p></center>";
+            pageBody += "<p>We look forward to seeing you at Ragnarok!</p>";
+            pageBody += "<p>----------------------------------------------<br />Troll</p>";
+        }
+
+        private void SendCampMasterEmail(Camp regCamp, RegistrationType regType)
         {
             Dictionary<string, string> hostSettings = DotNetNuke.Entities.Controllers.HostController.Instance.GetSettingsDictionary();
 
@@ -405,7 +585,7 @@ namespace Ragnarok.Modules.RagnarokRegistration.Staff
             mailMessage.To.Add(new MailAddress(regCamp.CampMaster.Email));
             mailMessage.Bcc.Add(new MailAddress("jjp4674@gmail.com"));
             //mailMessage.To.Add(new MailAddress("jjp4674@gmail.com"));
-            mailMessage.Subject = "Ragnarok XXXII - Camp Attendee Registration Confirmation";
+            mailMessage.Subject = "Ragnarok XXXIV - Camp Attendee Registration Confirmation";
             mailMessage.IsBodyHtml = true;
 
             string server = hostSettings["SMTPServer"];
@@ -414,9 +594,9 @@ namespace Ragnarok.Modules.RagnarokRegistration.Staff
             string username = hostSettings["SMTPUsername"];
 
             string body = "<p><b>" + regCamp.CampMaster.FirstName + "</b>,</p>";
-            body += "<p>An attendee has registered to attend <b>Ragnarok XXXII</b> as part of <b>" + regCamp.CampName + "</b>!</p>";
+            body += "<p>An attendee has registered to attend <b>Ragnarok XXXIV</b> as part of <b>" + regCamp.CampName + "</b>!</p>";
             body += "<p>Attendee Information<br />";
-            body += "Arrival Date: <b>06/16/2018</b><br />";
+            body += "Arrival Date: <b>" + regType.ArrivalDate.ToString("MM/dd/yyyy") + "</b><br />";
             body += "Name: <b>" + txtFirstName.Text + " " + txtLastName.Text + "</b><br />";
             body += "Character Name: <b>" + txtCharacterName.Text + "</b><br />";
             body += "Unit Name: <b>" + txtUnitName.Text + "</b><br />";
@@ -499,6 +679,33 @@ namespace Ragnarok.Modules.RagnarokRegistration.Staff
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        private string GetSelectedType()
+        {
+            if (rbAdultSaturday.Checked)
+                return rbAdultSaturday.Text;
+
+            return "";
+        }
+
+        private List<RegistrationType> PopulateRegistrationTypes()
+        {
+            List<RegistrationType> registrationTypes = new List<RegistrationType>();
+
+            // Adult Registrations
+            RegistrationType rt = new RegistrationType
+            {
+                Text = "Saturday (06/15/2019) - FREE", 
+                Day = "Saturday", 
+                ArrivalDate = Convert.ToDateTime("06/15/2019"), 
+                IsMinor = false, 
+                IsMerchant = false, 
+                Cost = 0
+            };
+            registrationTypes.Add(rt);
+
+            return registrationTypes;
         }
 
         private void WriteToViewState(string viewStateName, object objectToWrite)
