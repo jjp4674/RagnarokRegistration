@@ -76,7 +76,7 @@
                                     <td style="padding: 5px;"><%#Eval("CharacterName")%></td>
                                     <td style="padding: 5px;"><%#Eval("CampName")%></td>
                                     <td style="padding: 5px;"><%#Eval("Status")%></td>
-                                    <td style="padding: 5px;"><asp:ImageButton ID="btnView" runat="server" ImageUrl="/DesktopModules/RagnarokAdmin/CheckIn/images/View.png" AlternateText="View" CommandName="View" CommandArgument='<%#Eval("Id")%>' /></td>
+                                    <td style="padding: 5px;"><asp:ImageButton ID="btnView" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/CheckIn/images/View.png" AlternateText="View" CommandName="View" CommandArgument='<%#Eval("Id")%>' /></td>
                                 </tr>
                         </ItemTemplate>
                         <AlternatingItemTemplate>
@@ -86,7 +86,7 @@
                                     <td style="padding: 5px;"><%#Eval("CharacterName")%></td>
                                     <td style="padding: 5px;"><%#Eval("CampName")%></td>
                                     <td style="padding: 5px;"><%#Eval("Status")%></td>
-                                    <td style="padding: 5px;"><asp:ImageButton ID="btnView" runat="server" ImageUrl="/DesktopModules/RagnarokAdmin/CheckIn/images/View.png" AlternateText="View" CommandName="View" CommandArgument='<%#Eval("Id")%>' /></td>
+                                    <td style="padding: 5px;"><asp:ImageButton ID="btnView" runat="server" ImageUrl="/DesktopModules/RagnarokRegistration/CheckIn/images/View.png" AlternateText="View" CommandName="View" CommandArgument='<%#Eval("Id")%>' /></td>
                                 </tr>
                         </AlternatingItemTemplate>
                         <FooterTemplate>
@@ -132,6 +132,11 @@
             <asp:Panel ID="pNotPaid" runat="server" Visible="false">
                 <div class="notPaidBlock">
                     <p>This participant has NOT paid yet.  Please take payment at check-in.</p>
+                </div>
+            </asp:Panel>
+            <asp:Panel ID="pDuplicate" runat="server" Visible="false">
+                <div class="duplicateBlock">
+                    <p>This participant is marked as a duplicate record.  <a href="/CheckIn.aspx">Please search for this user to find the primary record.</a></p>
                 </div>
             </asp:Panel>
             <div class="row">
@@ -278,6 +283,17 @@
                             <asp:Literal ID="litEmergencyPhone" runat="server" />
                         </div>
                     </div>
+                    <asp:Panel ID="pMinor" runat="server" Visible="false">
+                    <h2>Minor Information</h2>
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <b>Parent's Tag Number:</b>
+                        </div>
+                        <div class="col-xs-7">
+                            <asp:Literal ID="litMinorParentTagNumber" runat="server" />
+                        </div>
+                    </div>
+                    </asp:Panel>
                 </div>
             </div>
             <div class="row">
@@ -364,6 +380,14 @@
                         </div>
                         <div class="col-xs-7">
                             <asp:CheckBox ID="cbxIsMinor" runat="server" style="width: 100%;" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <b>Parent's Tag Number:</b>
+                        </div>
+                        <div class="col-xs-7">
+                            <asp:TextBox ID="txtMinorParentTagNumber" runat="server" style="width: 100%;" />
                         </div>
                     </div>
                     <div class="row">
@@ -620,7 +644,7 @@
                     <h1>Thank You For Checking In</h1>
                 </div>
                 <div class="col-xs-12">
-                    <p>You have now checked in to Ragnarok XXXII!  We hope you have a great time!</p>
+                    <p>The attendee is now checked in to Ragnarok XXXIV!</p>
                 </div>
             </div>
         </asp:Panel>
@@ -631,10 +655,10 @@
     </Triggers>
 </asp:UpdatePanel>
 
-            <div id="signatureDiv" class="signatureDiv" runat="server" style="height:0; overflow: hidden;">
+            <div id="signatureDiv" class="signatureDiv" runat="server" style="height:0; overflow: hidden; margin: auto">
                 <div id="signature-pad" class="m-signature-pad">
                     <div class="m-signature-pad--body">
-                        <canvas id="signaturePad" width="500" height="318"></canvas>
+                        <canvas id="signaturePad" width="658" height="318"></canvas>
                     </div>
                     <div class="m-signature-pad--footer">
                         <div id="clearSignature" onclick="signaturePad.clear();">
@@ -661,7 +685,7 @@
 </asp:UpdatePanel>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.js"></script>
-<script type="text/javascript" src="/DesktopModules/RagnarokAdmin/CheckIn/js/signature.js"></script>
+<script type="text/javascript" src="/DesktopModules/RagnarokRegistration/CheckIn/js/signature.js"></script>
 
 <script type="text/javascript">
     var sf = $.ServicesFramework(<%:ModuleContext.ModuleId%>);

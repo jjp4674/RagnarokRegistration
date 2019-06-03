@@ -178,19 +178,6 @@ namespace Ragnarok.Modules.RagnarokRegistration.Models
             }
         }
 
-        private string _signature;
-        public string Signature
-        {
-            get
-            {
-                return _signature;
-            }
-            set
-            {
-                _signature = value;
-            }
-        }
-
         private bool _isMinor;
         public bool IsMinor
         {
@@ -201,6 +188,19 @@ namespace Ragnarok.Modules.RagnarokRegistration.Models
             set
             {
                 _isMinor = value;
+            }
+        }
+
+        private int? _minorParentTagNumber;
+        public int? MinorParentTagNumber
+        {
+            get
+            {
+                return _minorParentTagNumber;
+            }
+            set
+            {
+                _minorParentTagNumber = value;
             }
         }
 
@@ -341,8 +341,8 @@ namespace Ragnarok.Modules.RagnarokRegistration.Models
                 _eventYear = Convert.ToDateTime(reader["par_EventYear"].ToString());
                 _dateSigned = Convert.ToDateTime(reader["par_DateSigned"].ToString());
                 _status = reader["par_Status"].ToString();
-                _signature = reader["s_Signature"] == DBNull.Value ? "" : reader["s_Signature"].ToString();
                 _isMinor = reader["par_IsMinor"].ToString() == "Y" ? true : false;
+                _minorParentTagNumber = reader["par_MinorParentTagNumber"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["par_MinorParentTagNumber"].ToString());
                 _isMerchant = reader["par_IsMerchant"].ToString() == "Y" ? true : false;
                 _registrationDate = reader["par_RegistrationDate"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["par_RegistrationDate"].ToString());
                 _arrivalDate = reader["par_ArrivalDate"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["par_ArrivalDate"].ToString());

@@ -16,3 +16,4 @@ C:\RagnarokWebsite\DesktopModules\RagnarokRegistration\obj\Release\RagnarokRegis
 C:\RagnarokWebsite\DesktopModules\RagnarokRegistration\obj\Release\RagnarokRegistration.csproj.CopyComplete
 C:\RagnarokWebsite\DesktopModules\RagnarokRegistration\obj\Release\RagnarokRegistration.dll
 C:\RagnarokWebsite\DesktopModules\RagnarokRegistration\obj\Release\RagnarokRegistration.pdb
+C:\RagnarokWebsite\DesktopModules\RagnarokRegistration\obj\Release\RagnarokRegistration.csprojAssemblyReference.cache

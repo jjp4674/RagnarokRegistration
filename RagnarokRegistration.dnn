@@ -1,6 +1,6 @@
 <dotnetnuke type="Package" version="5.0">
   <packages>
-    <package name="RagnarokRegistration" type="Module" version="00.01.78">
+    <package name="RagnarokRegistration" type="Module" version="00.01.87">
       <friendlyName>RagnarokRegistration</friendlyName>
       <description>DagorhirRagnarok.com RagnarokRegistration module</description>
       <iconFile>~/Images/icon_extensions_32px.png</iconFile>
@@ -144,7 +144,7 @@
             <attributes>
               <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
               <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-              <upgradeVersionsList>00.01.78</upgradeVersionsList>
+              <upgradeVersionsList>00.01.87</upgradeVersionsList>
             </attributes>
           </eventMessage>
         </component>
@@ -159,7 +159,7 @@
       </components>
     </package>
     
-    <package name="RagnarokRegistrationNew" type="Module" version="00.01.78">
+    <package name="RagnarokRegistrationNew" type="Module" version="00.01.87">
       <friendlyName>RagnarokRegistrationNew</friendlyName>
       <description>DagorhirRagnarok.com RagnarokRegistration modules</description>
       <iconFile>~/Images/icon_extensions_32px.png</iconFile>
@@ -221,7 +221,7 @@
             <attributes>
               <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
               <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-              <upgradeVersionsList>00.01.78</upgradeVersionsList>
+              <upgradeVersionsList>00.01.87</upgradeVersionsList>
             </attributes>
           </eventMessage>
         </component>
@@ -237,7 +237,7 @@
       </components>
     </package>
 
-    <package name="RagnarokRegistrationComped" type="Module" version="00.01.78">
+    <package name="RagnarokRegistrationComped" type="Module" version="00.01.87">
       <friendlyName>RagnarokRegistrationComped</friendlyName>
       <description>DagorhirRagnarok.com RagnarokRegistration modules</description>
       <iconFile>~/Images/icon_extensions_32px.png</iconFile>
@@ -299,7 +299,7 @@
             <attributes>
               <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
               <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-              <upgradeVersionsList>00.01.78</upgradeVersionsList>
+              <upgradeVersionsList>00.01.87</upgradeVersionsList>
             </attributes>
           </eventMessage>
         </component>
@@ -315,7 +315,7 @@
       </components>
     </package>
 
-    <package name="RagnarokRegistrationRagU" type="Module" version="00.01.78">
+    <package name="RagnarokRegistrationRagU" type="Module" version="00.01.87">
       <friendlyName>RagnarokRegistrationRagU</friendlyName>
       <description>DagorhirRagnarok.com RagnarokRegistrationRagU modules</description>
       <iconFile>~/Images/icon_extensions_32px.png</iconFile>
@@ -377,7 +377,7 @@
             <attributes>
               <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
               <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-              <upgradeVersionsList>00.01.78</upgradeVersionsList>
+              <upgradeVersionsList>00.01.87</upgradeVersionsList>
             </attributes>
           </eventMessage>
         </component>
@@ -393,7 +393,7 @@
       </components>
     </package>
 
-    <package name="RagnarokRegistrationPayeezy" type="Module" version="00.01.78">
+    <package name="RagnarokRegistrationPayeezy" type="Module" version="00.01.87">
       <friendlyName>RagnarokRegistrationPayeezy</friendlyName>
       <description>DagorhirRagnarok.com RagnarokRegistration modules</description>
       <iconFile>~/Images/icon_extensions_32px.png</iconFile>
@@ -455,7 +455,7 @@
             <attributes>
               <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
               <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-              <upgradeVersionsList>00.01.78</upgradeVersionsList>
+              <upgradeVersionsList>00.01.87</upgradeVersionsList>
             </attributes>
           </eventMessage>
         </component>
@@ -471,7 +471,7 @@
       </components>
     </package>
 
-    <package name="RagnarokCampsAdmin" type="Module" version="00.01.78">
+    <package name="RagnarokCampsAdmin" type="Module" version="00.01.87">
       <friendlyName>Ragnarok Camps Admin</friendlyName>
       <description>DagorhirRagnarok.com RagnarokRegistration modules</description>
       <iconFile>~/Images/icon_extensions_32px.png</iconFile>
@@ -533,7 +533,7 @@
             <attributes>
               <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
               <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-              <upgradeVersionsList>00.01.78</upgradeVersionsList>
+              <upgradeVersionsList>00.01.87</upgradeVersionsList>
             </attributes>
           </eventMessage>
         </component>
@@ -549,7 +549,7 @@
       </components>
     </package>
 
-    <package name="RagnarokAttendeesAdmin" type="Module" version="00.01.78">
+    <package name="RagnarokAttendeesAdmin" type="Module" version="00.01.87">
       <friendlyName>Ragnarok Attendees Admin</friendlyName>
       <description>DagorhirRagnarok.com RagnarokRegistration modules</description>
       <iconFile>~/Images/icon_extensions_32px.png</iconFile>
@@ -611,7 +611,7 @@
             <attributes>
               <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
               <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-              <upgradeVersionsList>00.01.78</upgradeVersionsList>
+              <upgradeVersionsList>00.01.87</upgradeVersionsList>
             </attributes>
           </eventMessage>
         </component>
@@ -627,7 +627,7 @@
       </components>
     </package>
 
-    <package name="RagnarokCheckIn" type="Module" version="00.01.78">
+    <package name="RagnarokCheckIn" type="Module" version="00.01.87">
       <friendlyName>Ragnarok Check In</friendlyName>
       <description>DagorhirRagnarok.com RagnarokRegistration modules</description>
       <iconFile>~/Images/icon_extensions_32px.png</iconFile>
@@ -689,7 +689,7 @@
             <attributes>
               <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
               <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-              <upgradeVersionsList>00.01.78</upgradeVersionsList>
+              <upgradeVersionsList>00.01.87</upgradeVersionsList>
             </attributes>
           </eventMessage>
         </component>
@@ -705,7 +705,7 @@
       </components>
     </package>
 
-    <package name="RagnarokFinancialSummary" type="Module" version="00.01.78">
+    <package name="RagnarokFinancialSummary" type="Module" version="00.01.87">
       <friendlyName>Ragnarok Financial Summary</friendlyName>
       <description>DagorhirRagnarok.com RagnarokRegistration modules</description>
       <iconFile>~/Images/icon_extensions_32px.png</iconFile>
@@ -767,7 +767,7 @@
             <attributes>
               <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
               <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-              <upgradeVersionsList>00.01.78</upgradeVersionsList>
+              <upgradeVersionsList>00.01.87</upgradeVersionsList>
             </attributes>
           </eventMessage>
         </component>
@@ -783,7 +783,7 @@
       </components>
     </package>
 
-    <package name="RagnarokFinancialEstimate" type="Module" version="00.01.78">
+    <package name="RagnarokFinancialEstimate" type="Module" version="00.01.87">
       <friendlyName>Ragnarok Financial Estimate</friendlyName>
       <description>DagorhirRagnarok.com RagnarokRegistration modules</description>
       <iconFile>~/Images/icon_extensions_32px.png</iconFile>
@@ -845,7 +845,7 @@
             <attributes>
               <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
               <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-              <upgradeVersionsList>00.01.78</upgradeVersionsList>
+              <upgradeVersionsList>00.01.87</upgradeVersionsList>
             </attributes>
           </eventMessage>
         </component>
@@ -861,7 +861,7 @@
       </components>
     </package>
 
-    <package name="RagnarokCoopersPayment" type="Module" version="00.01.78">
+    <package name="RagnarokCoopersPayment" type="Module" version="00.01.87">
       <friendlyName>Ragnarok Coopers Payment</friendlyName>
       <description>DagorhirRagnarok.com RagnarokRegistration modules</description>
       <iconFile>~/Images/icon_extensions_32px.png</iconFile>
@@ -923,7 +923,7 @@
             <attributes>
               <businessControllerClass>Ragnarok.Modules.RagnarokRegistration.Components.FeatureController, RagnarokRegistration</businessControllerClass>
               <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-              <upgradeVersionsList>00.01.78</upgradeVersionsList>
+              <upgradeVersionsList>00.01.87</upgradeVersionsList>
             </attributes>
           </eventMessage>
         </component>

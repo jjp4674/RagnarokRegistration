@@ -28,6 +28,7 @@ using QRCoder;
 using System.IO;
 using System.Web.UI;
 using Ragnarok.Modules.RagnarokRegistration.Models;
+using System.Web;
 
 namespace Ragnarok.Modules.RagnarokRegistration.CheckIn
 {
@@ -151,21 +152,30 @@ namespace Ragnarok.Modules.RagnarokRegistration.CheckIn
                             }
                             litEmergencyContact.Text = attendee.EmergencyContact.Name;
                             litEmergencyPhone.Text = attendee.EmergencyContact.Phone;
+                            if (attendee.MinorParentTagNumber != null)
+                            {
+                                litMinorParentTagNumber.Text = attendee.MinorParentTagNumber.ToString();
+                            }
                             litHealthIssues.Text = string.IsNullOrEmpty(attendee.HealthIssues) ? "None" : attendee.HealthIssues;
-                            imgSignature.ImageUrl = attendee.Signature;
-                            if (string.IsNullOrEmpty(attendee.Signature) || attendee.Signature == "data:," || attendee.Signature == "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAloAAADKCAYAAAB9ou6AAAAKEUlEQVR4Xu3WMREAAAgDMerfNCp+CwI65Bh+5wgQIECAAAECBBKBJatGCRAgQIAAAQIETmh5AgIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEBAaPkBAgQIECBAgEAkILQiWLMECBAgQIAAAaHlBwgQIECAAAECkYDQimDNEiBAgAABAgSElh8gQIAAAQIECEQCQiuCNUuAAAECBAgQEFp+gAABAgQIECAQCQitCNYsAQIECBAgQEBo+QECBAgQIECAQCQgtCJYswQIECBAgAABoeUHCBAgQIAAAQKRgNCKYM0SIECAAAECBISWHyBAgAABAgQIRAJCK4I1S4AAAQIECBAQWn6AAAECBAgQIBAJCK0I1iwBAgQIECBAQGj5AQIECBAgQIBAJCC0IlizBAgQIECAAAGh5QcIECBAgAABApGA0IpgzRIgQIAAAQIEhJYfIECAAAECBAhEAkIrgjVLgAABAgQIEBBafoAAAQIECBAgEAkIrQjWLAECBAgQIEDgAUHgAMs2/Ea2AAAAAElFTkSuQmCC")
+
+                            // Check that the signature exists
+                            if (File.Exists(HttpContext.Current.Server.MapPath("~/images/Signatures/" + attendee.EventYear.Year + "/" + id + ".png")))
+                            {
+                                imgSignature.ImageUrl = "/images/Signatures/" + attendee.EventYear.Year + "/" + id + ".png?" + DateTime.Now.ToString();
+
+                                imgSignature.Visible = true;
+                                lblNoSignature.Visible = false;
+                            }
+                            else
                             {
                                 lblNoSignature.Visible = true;
                                 imgSignature.Visible = false;
 
                                 noProceed = true;
                             }
-                            else
-                            {
-                                imgSignature.Visible = true;
-                                lblNoSignature.Visible = false;
-                            }
+
                             pIsMinor.Visible = attendee.IsMinor;
+                            pMinor.Visible = attendee.IsMinor;
                             pIsMerchant.Visible = attendee.IsMerchant;
                             pCheckedIn.Visible = false;
                             if (attendee.ArrivalDate.HasValue)
@@ -179,9 +189,13 @@ namespace Ragnarok.Modules.RagnarokRegistration.CheckIn
                                 litArrival.Text = attendee.RegistrationDate.Value.DayOfWeek.ToString();
                             }
                             pNotPaid.Visible = false;
-                            if (attendee.Status == "Not Paid")
+                            if (attendee.Status != "Paid" && attendee.Status != "Checked In" && attendee.Status != "Duplicate")
                             {
                                 pNotPaid.Visible = true;
+                            }
+                            if (attendee.Status == "Duplicate")
+                            {
+                                pDuplicate.Visible = true;
                             }
 
                             SetViewStateItem("attendee", attendee);
@@ -224,6 +238,10 @@ namespace Ragnarok.Modules.RagnarokRegistration.CheckIn
                     txtLastName.Text = attendee.LastName;
                     txtDOB.Text = attendee.DateOfBirth.ToString("MM/dd/yyyy");
                     cbxIsMinor.Checked = attendee.IsMinor;
+                    if (attendee.MinorParentTagNumber != null)
+                    {
+                        txtMinorParentTagNumber.Text = attendee.MinorParentTagNumber.ToString();
+                    }
                     txtAddress1.Text = attendee.Address.Address1;
                     txtAddress2.Text = attendee.Address.Address2;
                     txtCity.Text = attendee.Address.City;
@@ -241,8 +259,10 @@ namespace Ragnarok.Modules.RagnarokRegistration.CheckIn
                     txtEmergencyContactPhone.Text = attendee.EmergencyContact.Phone;
                     txtHealthIssues.Text = attendee.HealthIssues;
 
-                    signatureCode.Value = attendee.Signature;
-                    string script = "signaturePad.fromDataURL('" + attendee.Signature + "');";
+                    byte[] bytes = File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/images/Signatures/" + attendee.EventYear.Year + "/" + attendee.Id + ".png"));
+                    string dataURL = "data:image/png;base64," + Convert.ToBase64String(bytes);
+                    signatureCode.Value = dataURL;
+                    string script = "signaturePad.fromDataURL('" + dataURL + "');";
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), Guid.NewGuid().ToString(), script, true);
                 }
             }
@@ -285,7 +305,7 @@ namespace Ragnarok.Modules.RagnarokRegistration.CheckIn
                     comm.Parameters.AddWithValue("@ec_Name", attendee.EmergencyContact.Name);
                     comm.Parameters.AddWithValue("@ec_Phone", attendee.EmergencyContact.Phone);
                     comm.Parameters.AddWithValue("@hi_HealthIssue", attendee.HealthIssues);
-                    comm.Parameters.AddWithValue("@s_Signature", attendee.Signature);
+                    comm.Parameters.AddWithValue("@par_MinorParentTagNumber", attendee.MinorParentTagNumber);
 
                     conn.Open();
 
@@ -396,6 +416,7 @@ namespace Ragnarok.Modules.RagnarokRegistration.CheckIn
                 attendee.LastName = txtLastName.Text;
                 attendee.DateOfBirth = Convert.ToDateTime(txtDOB.Text);
                 attendee.IsMinor = cbxIsMinor.Checked;
+                attendee.MinorParentTagNumber = Convert.ToInt32(txtMinorParentTagNumber.Text);
                 if (attendee.Address == null)
                 {
                     Address address = new Address();
@@ -429,9 +450,13 @@ namespace Ragnarok.Modules.RagnarokRegistration.CheckIn
                 attendee.HealthIssues = txtHealthIssues.Text;
                 attendee.Status = "Paid";
                 attendee.EventYear = DateTime.Now;
-                attendee.Signature = signatureCode.Value;
 
                 id = SaveAttendee(attendee);
+
+                if (id != "0")
+                {
+                    SaveSignature(Convert.ToInt32(id));
+                }
             }
 
             LoadAttendeeData(id);
@@ -442,6 +467,14 @@ namespace Ragnarok.Modules.RagnarokRegistration.CheckIn
 
             string script = "hideSignature();";
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), Guid.NewGuid().ToString(), script, true);
+        }
+
+        private void SaveSignature(int participantId)
+        {
+            var encodedImage = signatureCode.Value.Split(',')[1];
+            var decodedImage = Convert.FromBase64String(encodedImage);
+
+            File.WriteAllBytes(Server.MapPath("~/images/Signatures/2019/" + participantId + ".png"), decodedImage);
         }
 
         private void SetViewStateItem(string key, object obj)

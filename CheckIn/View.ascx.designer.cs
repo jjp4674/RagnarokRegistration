@@ -184,6 +184,15 @@ namespace Ragnarok.Modules.RagnarokRegistration.CheckIn {
         protected global::System.Web.UI.WebControls.Panel pNotPaid;
         
         /// <summary>
+        /// pDuplicate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pDuplicate;
+        
+        /// <summary>
         /// litFirstName control.
         /// </summary>
         /// <remarks>
@@ -344,6 +353,24 @@ namespace Ragnarok.Modules.RagnarokRegistration.CheckIn {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litEmergencyPhone;
+        
+        /// <summary>
+        /// pMinor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pMinor;
+        
+        /// <summary>
+        /// litMinorParentTagNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litMinorParentTagNumber;
         
         /// <summary>
         /// litHealthIssues control.
@@ -605,6 +632,15 @@ namespace Ragnarok.Modules.RagnarokRegistration.CheckIn {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox cbxIsMinor;
+        
+        /// <summary>
+        /// txtMinorParentTagNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMinorParentTagNumber;
         
         /// <summary>
         /// txtAddress1 control.

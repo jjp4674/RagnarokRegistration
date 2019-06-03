@@ -70,10 +70,9 @@
     left: 0px;
 }
 
-#signaturePad
-{
+#signaturePad {
     border: solid #9C9F84 1px;
-    width: 100%;
+    width: 600px;
     height: 200px;
     z-index: 99;
 }
@@ -131,7 +130,12 @@
     background-color: #ff0000;
     color: #ffffff;
 }
-.minorBlock p, .merchantBlock p, .checkedInBlock p, .arrivalBlock p, .notPaidBlock p
+.duplicateBlock 
+{
+    width: 100%;
+    background-color: #fff789;
+}
+.minorBlock p, .merchantBlock p, .checkedInBlock p, .arrivalBlock p, .notPaidBlock p, .duplicateBlock p
 {
     font-size: 18px;
     padding-top: 10px;
